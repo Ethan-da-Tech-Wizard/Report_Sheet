@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SANTÉ CNA Master Shift Report & Brain Sheet</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark">
+  <!-- Application Header (Screen Only) -->
+  <header class="app-header no-print">
+    <div class="header-brand">
+      <div class="logo-icon"><i data-lucide="clipboard-plus"></i></div>
+      <div class="brand-text">
+        <h1>SANTÉ <span>Mesa</span></h1>
+        <p class="subtitle">CNA Master Shift Brain & Handoff System</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Layout Mode Selector -->
+      <div class="control-group">
+        <label for="layoutSelect"><i data-lucide="layout-grid"></i> Print Layout:</label>
+        <select id="layoutSelect" class="select-input">
+          <option value="12-grid">12 Residents (Compact 1-Page Shift)</option>
+          <option value="8-grid" selected>8 Residents (Standard Skilled Care)</option>
+          <option value="4-grid">4 Residents (High-Acuity / Detailed)</option>
+          <option value="1-grid">1 Resident (Comprehensive Care Plan)</option>
+        </select>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="btn-group">
+        <button id="btnQuickDemo" class="btn btn-secondary" title="Load sample CNA shift data">
+          <i data-lucide="sparkles"></i> Demo Data
+        </button>
+        <button id="btnAddResident" class="btn btn-secondary">
+          <i data-lucide="user-plus"></i> Add Resident
+        </button>
+        <button id="btnClearAll" class="btn btn-danger-outline" title="Clear all resident data">
+          <i data-lucide="trash-2"></i> Reset
+        </button>
+        <button id="btnExportJSON" class="btn btn-secondary" title="Save file for cloud/sharing">
+          <i data-lucide="download"></i> Backup JSON
+        </button>
+        <button id="btnImportJSON" class="btn btn-secondary" title="Load saved file">
+          <i data-lucide="upload"></i> Load JSON
+        </button>
+        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        <button id="btnPrintBW" class="btn btn-primary btn-print">
+          <i data-lucide="printer"></i> Print B&W Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Shift Metadata Bar (Screen & Print) -->
+  <div class="shift-meta-bar">
+    <div class="meta-item editable-field">
+      <span class="meta-label">FACILITY:</span>
+      <input type="text" id="facilityName" value="Santé of Mesa - Skilled Nursing & Rehab" class="meta-input">
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">DATE:</span>
+      <input type="date" id="shiftDate" class="meta-input">
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">SHIFT:</span>
+      <select id="shiftType" class="meta-select">
+        <option value="DAY (06:00 - 14:30)">DAY (06:00 - 14:30)</option>
+        <option value="EVE (14:00 - 22:30)" selected>EVE (14:00 - 22:30)</option>
+        <option value="NOC (22:00 - 06:30)">NOC (22:00 - 06:30)</option>
+        <option value="12H DAY (06:00 - 18:30)">12H DAY (06:00 - 18:30)</option>
+        <option value="12H NOC (18:00 - 06:30)">12H NOC (18:00 - 06:30)</option>
+      </select>
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">HALL / UNIT:</span>
+      <input type="text" id="hallUnit" value="Station 1 / Rehab Wing" class="meta-input">
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">CNA NAME:</span>
+      <input type="text" id="cnaName" placeholder="Your Name, CNA" class="meta-input">
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">NURSE / TEAM:</span>
+      <input type="text" id="nurseName" placeholder="Charge Nurse Name" class="meta-input">
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    <!-- Resident Grid Container -->
+    <div id="residentGrid" class="resident-grid grid-8">
+      <!-- Resident Cards will be rendered dynamically here -->
+    </div>
+  </main>
+
+  <!-- Shift Quick Summary & Legend Footer (Print & Screen) -->
+  <footer class="sheet-footer">
+    <div class="footer-legend">
+      <span class="legend-title">CNA LEGEND / CODES:</span>
+      <span class="legend-tag"><b>DNR</b> = Do Not Resuscitate</span>
+      <span class="legend-tag"><b>FC</b> = Full Code</span>
+      <span class="legend-tag"><b>1PA</b> = 1-Person Assist</span>
+      <span class="legend-tag"><b>2PA</b> = 2-Person Assist</span>
+      <span class="legend-tag"><b>S2S</b> = Sit-to-Stand Lift</span>
+      <span class="legend-tag"><b>HOYER</b> = Mechanical Lift</span>
+      <span class="legend-tag"><b>NPO</b> = Nothing By Mouth</span>
+      <span class="legend-tag"><b>I&O</b> = Intake & Output</span>
+      <span class="legend-tag"><b>BM</b> = Bowel Movement</span>
+    </div>
+    <div class="footer-signature">
+      <span>CNA Handoff Signature: ___________________________</span>
+      <span>On-Coming CNA: ___________________________</span>
+    </div>
+  </footer>
+
+  <!-- Modal for Adding/Editing Detailed Resident (Screen Only) -->
+  <div id="residentModal" class="modal no-print">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Edit Resident Details</h2>
+        <button class="close-btn" id="btnCloseModal">&times;</button>
+      </div>
+      <form id="residentForm" class="modal-body">
+        <input type="hidden" id="modalResidentId">
+        
+        <div class="form-row">
+          <div class="form-group col-3">
+            <label>Room #</label>
+            <input type="text" id="mRoom" placeholder="e.g. 104-A" required>
+          </div>
+          <div class="form-group col-6">
+            <label>Resident Full Name / Preferred</label>
+            <input type="text" id="mName" placeholder="e.g. Smith, John" required>
+          </div>
+          <div class="form-group col-3">
+            <label>Code Status</label>
+            <select id="mCodeStatus">
+              <option value="FULL CODE">FULL CODE</option>
+              <option value="DNR">DNR</option>
+              <option value="DNR/DNI">DNR / DNI</option>
+              <option value="POLST/COLST">POLST / Limited</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label>Diet / Texture</label>
+            <input type="text" id="mDiet" placeholder="Regular, Mech Soft, Puree, Honey Thick, NPO">
+          </div>
+          <div class="form-group col-4">
+            <label>Fluid Restriction / Assist</label>
+            <input type="text" id="mFluid" placeholder="1500mL Restr / Feed Assist / Independent">
+          </div>
+          <div class="form-group col-4">
+            <label>Transfer / Mobility</label>
+            <select id="mTransfer">
+              <option value="Independent">Independent</option>
+              <option value="Supervision / Standby">Supervision / Standby</option>
+              <option value="1PA (1-Person Assist)">1PA (1-Person Assist)</option>
+              <option value="2PA (2-Person Assist)">2PA (2-Person Assist)</option>
+              <option value="Sit-to-Stand (S2S)">Sit-to-Stand (S2S)</option>
+              <option value="Hoyer / Full Lift">Hoyer / Full Mechanical Lift</option>
+              <option value="Wheelchair Dependent">Wheelchair Dependent</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label>Continence / Elimination</label>
+            <input type="text" id="mBowelBladder" placeholder="Brief L / Foley Catheter / Ostomy / Independent">
+          </div>
+          <div class="form-group col-4">
+            <label>ADL Assist Level</label>
+            <input type="text" id="mAdlLevel" placeholder="Total Care / Setup / Moderate Assist">
+          </div>
+          <div class="form-group col-4">
+            <label>Shower / Bath Schedule</label>
+            <input type="text" id="mShower" placeholder="Today EVE / Mon-Thu / Bed Bath">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-4">
+            <label>Vitals Frequency</label>
+            <input type="text" id="mVitalsFreq" placeholder="Q Shift / Q4H / BID / Weight Today">
+          </div>
+          <div class="form-group col-4">
+            <label>Safety & Precautions</label>
+            <input type="text" id="mSafety" placeholder="Fall Risk, Bed Low, Alarm, Contact Iso, O2 2L">
+          </div>
+          <div class="form-group col-4">
+            <label>Accu-Chek / Blood Sugar</label>
+            <input type="text" id="mAccuChek" placeholder="AC&HS / 11:30 & 16:30 / N/A">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Shift Focus, Wounds, Behaviors & Special Instructions</label>
+          <textarea id="mNotes" rows="3" placeholder="e.g. Reposition Q2H, prefers right side, left heel dressing dry, wandering in evening..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnCancelModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Resident</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
