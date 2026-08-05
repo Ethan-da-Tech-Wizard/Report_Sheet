@@ -1,0 +1,904 @@
+put this verbatim even the beginnning "put this verbatim" like even after i type that into a file called verbatim..... like copy my entire response and paste it into a file called verbait within this folder "CNA Shift Report Sheet Standardization Package
+
+Prepared for: Assistant Director of Nursing, Santé of MesaPrepared by: CNA project sponsor / facility review teamDate: August 4, 2026Status: Draft for Nursing, Privacy/Security, Infection Prevention, Therapy, Dietary/SLP, Health Information Management, and Legal/Compliance review
+
+Important: This is a proposed workflow and design standard—not a medical order, legal opinion, approved facility policy, or substitute for the EHR, Kardex, assignment record, physician orders, or person-centered care plan. No real resident information should be entered into the current public demonstration app.
+
+Executive recommendation
+
+Approve a limited paper-form pilot after interdisciplinary review. Continue testing the web app with synthetic data only until Santé's Privacy/Security Officer and IT team approve a production architecture.
+
+The current open-source prototype is useful as a design demonstration, but it is not ready for protected health information (PHI). It has no authentication, role-based access, audit trail, approved retention control, conflict handling, or server-side security; it stores resident details in browser localStorage and exports plaintext JSON. “Free software” does not make a workflow HIPAA-compliant. Production use requires facility governance, secure managed devices, an approved vendor/service arrangement, risk analysis, policies, training, and—when a cloud service provider maintains ePHI—an appropriate business associate agreement (BAA).
+
+Governing design principles
+
+Care-plan derived: Every resident-specific instruction must come from the current order, assignment, or person-centered plan of care. CMS requires services to be delivered by qualified persons in accordance with the written care plan (42 CFR §483.21; 42 CFR §483.25).
+
+Handoff aid, not source of truth: If the sheet and EHR disagree, stop, protect the resident, and confirm with the licensed nurse/current order. Never “split the difference.”
+
+Minimum necessary: Include only information needed for the CNA's assigned care and handoff. HHS requires covered entities to evaluate and limit unnecessary access or disclosure of PHI (HHS Minimum Necessary guidance).
+
+Objective and actionable: Record the assistance, equipment, timing, precautions, resident preferences, observed change, and escalation—not stigmatizing labels or unsupported clinical conclusions.
+
+Closed-loop handoff: The outgoing CNA identifies current status, changes, completed/outstanding tasks, and what to watch for; the incoming CNA reads back high-risk items and accepts the assignment. AHRQ recommends structured communication whenever responsibility changes, including shift changes and short breaks (AHRQ long-term-care handoff guidance).
+
+One workflow, two surfaces: Paper and digital views must use the same facility-approved terms, data definitions, task times, escalation rules, and revision date.
+
+Section 1 — Essential CNA Shift Data Matrix
+
+There is no universal federal list of “mandatory brain-sheet fields.” The facility determines the form from applicable law, current orders, the resident's assessment and person-centered care plan, staff scope/competency, and local policy. The following is a recommended minimum operational dataset for a 12-resident SNF/Rehab assignment.
+
+1.1 Assignment and sheet-control fields
+
+Field
+
+Requirement
+
+Design rule
+
+Facility, unit/hall, assignment
+
+Always
+
+Use facility-approved names; avoid defaulting to a real facility in a public template.
+
+Date, shift, shift start/end
+
+Always
+
+Use unambiguous date format, e.g. 2026-08-04; facility shift names/times control.
+
+Sheet revision / generated time
+
+Always
+
+Shows whether the handoff aid may be stale.
+
+Outgoing CNA, incoming CNA, charge nurse
+
+Always
+
+Printed name/initials per policy; signature does not replace required EHR documentation.
+
+Resident count and assignment acceptance
+
+Always
+
+Confirm the full assignment and unresolved coverage issues before handoff closes.
+
+Confidentiality footer
+
+Always
+
+CONFIDENTIAL PHI — KEEP SECURE — DISPOSE PER FACILITY POLICY.
+
+1.2 Resident-level clinical and ADL matrix
+
+Domain
+
+Minimum field set
+
+Allowed examples / format
+
+Safety and scope guardrail
+
+Identification
+
+Room/bed; facility-approved resident identifier; preferred name
+
+104-A · J. Smith · prefers “Jack”
+
+Room number alone is not a bedside identity check. Exclude DOB, SSN, insurance numbers, and full MRN unless specifically approved as necessary.
+
+Change flag
+
+New admission/return; new or changed care-plan item; acute concern; verification time
+
+NEW TRANSFER PLAN—verified 14:10
+
+A paper flag never authorizes care. Confirm changes with the licensed nurse/current source.
+
+Code-status alert
+
+Facility-approved exact status, only if leadership determines it is necessary for CNA handoff
+
+FULL CODE; DNR—VERIFY EHR
+
+Optional pending policy. A POLST is an orders form, not one generic status. Never infer status, and never use the brain sheet as the emergency source of truth. Avoid FC; it is commonly confused with Foley catheter.
+
+Diet / food texture
+
+Exact current diet order; IDDSI food level/name if the facility uses IDDSI
+
+IDDSI 6 Soft & Bite-Sized
+
+Do not translate or “simplify” an order. “Mechanical soft” can be ambiguous. IDDSI uses drink Levels 0–4 and food Levels 3–7 (IDDSI Framework).
+
+Liquid consistency
+
+Exact ordered liquid level/name; permitted exceptions if ordered
+
+IDDSI 2 Mildly Thick
+
+Do not rely only on legacy terms such as nectar/honey. Match Dietary/SLP terminology exactly.
+
+Meal safety and assistance
+
+Independence/supervision/assist/total feed; positioning; adaptive equipment; aspiration precautions; meal location
+
+1:1 feed · upright 90° · small sips
+
+Only include active care-plan instructions. Report coughing, choking, wet voice, pocketing, reduced alertness, or change per policy; do not independently change texture.
+
+Hydration
+
+Fluid restriction or encouragement plan; amount assigned to shift; strict I&O task
+
+FR 1500 mL/day · shift allotment ___ mL; Strict I&O
+
+A daily limit without the shift allotment creates error risk. Licensed nurse/dietary plan determines allocation and escalation.
+
+Bed mobility
+
+Independent/supervision/1-person/2-person; device; side preference if care planned
+
+2PA boost · draw sheet
+
+Separate bed mobility from transfer and ambulation; one combined “assist level” is often unsafe.
+
+Transfer
+
+Assist level; transfer method; exact equipment; sling type/size if applicable
+
+2PA full mechanical lift · size M sling
+
+Use generic equipment terms where possible, not only brand names. Staff must be trained and follow the current transfer plan.
+
+Ambulation
+
+Assist level; device; weight-bearing status; distance or destination limits
+
+1PA + gait belt + FWW · WBAT
+
+Do not infer weight-bearing status. Report inability or a meaningful change before continuing.
+
+Toileting / continence
+
+Toileting schedule; continence pattern; assistance/equipment; brief size if operationally useful
+
+Toilet q2h while awake · 1PA commode · brief L
+
+Brief size is a supply field, not a complete continence plan. Preserve privacy and resident choice.
+
+Urinary device
+
+Device present; assigned observe/empty/measure task; securement/location checks
+
+Foley—empty/measure q shift
+
+CNA care is limited to trained, assigned tasks. Report obstruction, leakage, pain, blood, no output, or change; do not perform unassigned sterile procedures.
+
+Ostomy
+
+Pouch present; assigned observe/empty/measure task; supply location if needed
+
+Ostomy—observe/empty/report
+
+Avoid the vague phrase “ostomy care.” State only the exact delegated task for which competency and policy exist.
+
+Bowel tracking
+
+Last known BM date/shift if approved; bowel-monitoring task; report threshold
+
+BM this shift: time ___; No BM—notify per protocol
+
+Do not use a single BM 1/2/3 checkbox; its meaning is unclear. Document required findings in the official record.
+
+Bathing / hygiene
+
+Shower/bed bath schedule and shift; assistance; resident preference; oral care/dentures
+
+Shower EVE · 1PA · prefers female staff; dentures HS
+
+If refused, preserve choice, offer approved alternatives, report, and document per policy. A checkbox should distinguish done/refused/not due.
+
+Dressing / grooming
+
+Setup/min/mod/max/total assist; cueing; affected limb/precaution
+
+Mod assist · dress affected arm first
+
+Use the current therapy/nursing plan; do not invent rehabilitation technique.
+
+Sensory / communication
+
+Glasses, hearing aids, communication board, interpreter or cueing needs
+
+Hearing aids · face resident · one-step cues
+
+Supports person-centered care and reduces behavior mislabeling. Keep only actionable information.
+
+Repositioning / offloading
+
+Individualized schedule; position limits/preferences; heel/offloading device; chair pressure relief
+
+Turn 06/09/12 · float heels; no left side
+
+Do not default everyone to Q2H. Repositioning must follow the individualized care plan; AHRQ states care planning must fit the patient's needs (AHRQ pressure-injury care planning).
+
+Skin observation
+
+Areas requiring routine observation; protective device; exact report-now trigger
+
+Observe sacrum/heels during care · report redness/open area
+
+CNA observes and reports. Wound assessment, staging, and treatment direction belong to licensed clinicians unless a specific permissible task is delegated.
+
+Vitals / weight
+
+Exact task, time/frequency, equipment, and report-to-nurse requirement
+
+VS 14:00; weight before breakfast
+
+Arizona identifies vital signs, height, and weight as basic CNA/LNA skills. CNAs report abnormal physical or mental changes (Arizona Board of Nursing CNA/LNA FAQ, pp. 7–8).
+
+Blood glucose
+
+Ordered time(s); completion/report field
+
+BG AC dinner / HS
+
+In Arizona, experienced CNAs/LNAs may perform blood-glucose testing only when agency policy exists and competency is documented; results must be reported to a licensed nurse (Arizona Board FAQ, p. 10). Use BG, not ambiguous BS.
+
+Oxygen
+
+Device, ordered setting as a verify/report cue, and safety instruction
+
+NC—ordered 2 L/min · do not titrate · report mismatch
+
+Arizona guidance says CNA/LNA may remove/apply an oxygen device during transfers but may not change oxygen settings or tanks (Arizona Board FAQ, p. 10).
+
+Fall / accident interventions
+
+Specific current interventions: transfer help, footwear, lighting, call light, rounding/toileting, low bed, mat, device placement
+
+1PA to toilet · non-skid footwear · low bed · round hourly
+
+“Fall risk” alone is not actionable. Position alarms do not replace supervision and should not be the primary/sole fall intervention (CMS Appendix PP, F689 guidance).
+
+Isolation / PPE
+
+Exact ordered Transmission-Based Precaution and task-relevant PPE/equipment handling cue
+
+CONTACT—follow door sign · dedicated BP cuff
+
+Infection Prevention/charge nurse controls placement and precaution decisions. CDC recommends Transmission-Based Precautions in addition to Standard Precautions when indicated (CDC Isolation Precautions). The room sign/current policy remains authoritative.
+
+Cognition / behavior support
+
+Baseline cognition/communication; cueing; known triggers; preferred approach; elopement/wandering plan; observed change
+
+Baseline: one-step cues · approach from front · music calms
+
+Replace labels such as “combative” with observable behavior, trigger, effective approach, and escalation. Never diagnose. Report acute change.
+
+Refusal / choice
+
+Task refused, alternative offered, safety concern, nurse notified
+
+Shower declined—bed bath offered—RN notified 15:20
+
+A refusal is not task completion. Respect resident rights and follow the approved escalation/documentation process.
+
+Therapy / appointments
+
+Time, transport/ADL preparation, equipment, weight-bearing or clothing need
+
+PT 10:00 · dressed by 09:30 · shoes/FWW
+
+Include only what the CNA must do. Discharge teaching and clinical interpretation are not CNA handoff tasks.
+
+Shift focus / contingency
+
+Top 1–3 priorities; outstanding task; what change requires immediate nurse notification
+
+NEW weakness → stay with resident/call nurse; weight still due
+
+Use brief, objective, time-linked instructions. Emergency response always follows facility policy.
+
+Handoff closure
+
+Completed tasks; outstanding tasks; concern escalated to whom/when; receiver initials/read-back
+
+RN Lee notified 18:05 · incoming CNA read-back
+
+The checklist does not replace charting or an incident report.
+
+1.3 Information that should not appear by default
+
+Full diagnosis and medication lists, psychotherapy details, SSN, insurance information, full DOB, or other nonessential identifiers.
+
+Insulin doses, medication administration directions, oxygen titration instructions, wound staging, or independent clinical decision rules for CNAs.
+
+Subjective labels such as “difficult,” “noncompliant,” “aggressive,” or “combative.” Use observable facts and an approved response.
+
+Copied-forward instructions without an updated/verified time.
+
+Any real resident data in source code, GitHub issues, screenshots, demo files, or public documentation.
+
+1.4 Completion tracker standard
+
+Use time-specific, auditable marks rather than one vague checkbox:
+
+Task
+
+Recommended print control
+
+Vitals / weight
+
+VS due ____  Done ____  Reported ____
+
+Meals
+
+B ____%  L ____%  D ____% plus feed/positioning completion if assigned
+
+Fluid / output
+
+Intake ____ mL  Output ____ mL  Reported ____ when ordered
+
+BM
+
+Time ____  Official record entered □  Concern reported □
+
+Repositioning
+
+Shift-specific time boxes, each with initials: 06 __ 09 __ 12 __ or the resident's ordered schedule
+
+Bath
+
+Done □  Refused □  Not due □  Alternative/notification ____
+
+BG
+
+Ordered time boxes with done/reported; do not place the result on the brain sheet unless policy requires it
+
+Section 2 — Print Ergonomics and Black-and-White Standards
+
+2.1 Page geometry
+
+For US Letter landscape, 0.30-inch margins leave approximately 10.4 × 7.9 inches. Treat the one-page limit as a constraint, not a dare.
+
+Layout
+
+Geometry
+
+Appropriate use
+
+Content limit
+
+12-resident summary
+
+4 columns × 3 rows
+
+Stable assignment, concise care-plan cues
+
+About 2.5 × 2.1 inches per resident after header/footer/gaps; no narrative paragraph
+
+8-resident standard
+
+4 columns × 2 rows
+
+Typical skilled/Rehab assignment
+
+About 2.5 × 3.0 inches per resident; supports more task boxes
+
+4-resident high acuity
+
+2 columns × 2 rows
+
+Complex transfer, skin, I&O, or behavior-support needs
+
+Larger notes and time-specific trackers
+
+1-resident detail
+
+One resident per page
+
+Admission/return, special observation, or teaching aid
+
+Must not be presented as the care plan itself
+
+Hard rule: If approved content cannot remain legible at 100% print scale, use two pages or a lower resident-count layout. Do not solve overflow with 6-point text.
+
+2.2 Visual specification
+
+Print body text: 8.0 pt minimum, 8.5–9 pt preferred; resident name/room 10–11 pt bold.
+
+Use a system sans-serif stack for print (Arial, Helvetica, sans-serif) so printing is not dependent on internet fonts.
+
+Use white backgrounds, black text, and 0.75–1.25 pt black rules. Avoid gray fills, gradients, shadows, reversed white-on-black badges, and decorative icons.
+
+Keep field labels short and consistently positioned. Use whitespace and borders—not shading—to group sections.
+
+Reserve at least 0.20–0.25 inch vertical height for handwriting lines and 4–5 mm boxes for handwritten checks/initials.
+
+Prevent card splitting with break-inside: avoid; test the entire page, including metadata, legend, confidentiality footer, and printer nonprintable area.
+
+Repeat the sheet date/shift/unit and page number on every page.
+
+Print a visible revision identifier, e.g. CNA-HO-01 Rev 2026-08-04.
+
+Test on the actual facility printers at 100% scale, duplex on/off, Chrome/Edge print engines, and copier/scanner reproduction. A browser preview alone is not acceptance testing.
+
+2.3 Facility-approved abbreviation legend
+
+Abbreviations must be approved by Nursing/Health Information Management and used the same way in the EHR and paper workflow.
+
+Use
+
+Meaning
+
+Caution
+
+FULL
+
+Full Code
+
+Prefer over FC; FC may be read as Foley catheter.
+
+DNR
+
+Do Not Resuscitate
+
+Verify current order/source; do not infer.
+
+1PA / 2PA
+
+One-/two-person assist
+
+Must be paired with task and equipment where needed.
+
+SBA
+
+Standby assist
+
+Define locally; do not confuse with supervision.
+
+CGA
+
+Contact guard assist
+
+Use only if part of current therapy/care terminology.
+
+S2S
+
+Sit-to-stand lift
+
+Include staffing and sling/harness instructions.
+
+FML
+
+Full mechanical lift
+
+Prefer generic term; HOYER is a brand name.
+
+FWW
+
+Front-wheeled walker
+
+Define locally if used.
+
+WBAT / NWB
+
+Weight bearing as tolerated / non-weight bearing
+
+Copy exact active order.
+
+NPO
+
+Nothing by mouth
+
+Exact order controls, including oral-care instructions and exceptions.
+
+I&O
+
+Intake and output
+
+State whether strict and what the shift must measure.
+
+BM
+
+Bowel movement
+
+Add date/time; avoid unexplained 1/2/3.
+
+BG
+
+Blood glucose
+
+Prefer over BS, which is ambiguous.
+
+NC
+
+Nasal cannula
+
+CNA does not independently titrate oxygen.
+
+IDDSI
+
+International Dysphagia Diet Standardisation Initiative
+
+Pair level number with level name.
+
+Avoid MS, FC, BS, OOB, ad lib, and other locally ambiguous shorthand unless the facility has explicitly standardized them.
+
+2.4 Handoff sequence
+
+Use a compact S-A-F-E script for each resident:
+
+Status/change: identity, new admission/return, baseline change, immediate concern.
+
+Assistance: diet/liquid, transfer/ambulation, toileting, ADL and communication needs.
+
+Focus tasks: time-critical care completed and still due.
+
+Escalation: what was reported, to whom/when, what the incoming CNA must watch for.
+
+Echo/read-back: incoming CNA repeats high-risk transfer, diet, isolation, and outstanding-task items.
+
+This is compatible with AHRQ's structured handoff approach and can be mapped to SBAR or I-PASS if the facility already uses those tools (AHRQ Handoff Tool; AHRQ I-PASS Tool).
+
+Section 3 — Digital and Cloud Integration Strategy
+
+3.1 Recommended deployment order
+
+Stage
+
+Data allowed
+
+Purpose
+
+Approval gate
+
+0. Public/open-source demo
+
+Synthetic data only
+
+Layout, usability, contributor testing
+
+Remove facility branding or obtain written permission; add a real open-source license
+
+1. Paper pilot
+
+Minimum necessary live PHI on an approved form
+
+Validate fields, handoff speed, legibility, task completion
+
+DON/ADON, Privacy, HIM, Infection Prevention, Therapy, Dietary/SLP
+
+2. Secure prototype
+
+Synthetic or formally de-identified data
+
+Test authentication, audit, schema, printing, downtime, retention
+
+IT/Security architecture review
+
+3. Production digital pilot
+
+Minimum necessary PHI
+
+One unit, limited users, measured outcomes
+
+Risk analysis, BAA/vendor review if applicable, policies, training, incident response
+
+4. Scale
+
+Approved live workflow
+
+Facility-wide standard
+
+Pilot results and QAPI approval
+
+3.2 Preferred architecture
+
+Best option: EHR-integrated handoff view. Pull current care-plan instructions and assignment data from the approved system, display the effective time, and write required completion data back to the official record. This minimizes duplicate, stale data.
+
+Second option: facility-managed Google Workspace or equivalent. Use only a Santé-managed tenant and accounts, only services covered by the organization's accepted BAA and approval, with least-privilege access, MFA, managed devices, audit logging, retention, sharing restrictions, and a documented risk analysis. HHS states that a cloud service provider maintaining ePHI requires an appropriate BAA and HIPAA compliance by both parties (HHS Cloud Computing guidance).
+
+Do not use personal Google Drive, personal email, personal devices, consumer file-sharing links, USB drives, or general shared folders for PHI.
+
+3.3 Google Sheets design
+
+If Santé approves Google Workspace for this use:
+
+Use a protected master template owned by a service/facility account, not an individual employee.
+
+Separate tables into Resident Care Profile (read-only imported/current instructions), Shift Assignment, Task Events, Handoff, and Print View.
+
+Use dropdowns/data validation for assist level, equipment, IDDSI levels, task status, isolation type, and refusal status.
+
+Protect formulas, definitions, and care-profile cells; CNAs edit only assigned task/status fields.
+
+Stamp every change with user, date/time, shift ID, resident ID, and revision.
+
+Provide a generated/verified time and stale-data warning on the print view.
+
+Use filtered views per unit/assignment; never rely on hidden rows as an access-control mechanism.
+
+Prohibit public links and external sharing; regularly review memberships and audit events.
+
+Define end-of-shift disposition: merge required facts into the EHR, then retain or securely delete the working sheet according to HIM policy.
+
+Google Docs is acceptable for the approved proposal or blank template, but it is a poor live data store: free text is hard to validate, audit, filter, or reconcile. JSON import/export is file transfer—not Google Docs integration.
+
+3.4 Minimum production security controls
+
+Unique user authentication, role-based authorization, MFA, automatic screen lock, and immediate offboarding.
+
+Encryption in transit and at rest within an approved managed platform; secure backups and tested recovery.
+
+Immutable audit events for view, create, update, print/export, import, deletion, and administrative changes.
+
+Server-side schema validation, size limits, allowlisted values, safe rendering, and malware/content checks for imported files.
+
+Version/revision control with conflict detection; never silently overwrite a newer shift record.
+
+Automatic shift expiration/locking and a written retention/destruction schedule.
+
+Managed printers, immediate pickup, secure transport, and locked shred bins. HHS requires reasonable safeguards for PHI disposal and says paper PHI should not enter publicly accessible trash unless rendered unreadable and unreconstructable (HHS Disposal guidance).
+
+Downtime procedure and read-only emergency access that does not depend on an internet connection.
+
+No real PHI in analytics, browser crash reports, source maps, screenshots, GitHub issues, demo data, or developer logs.
+
+3.5 Minimum digital data model
+
+Every saved record should include:
+
+{
+  "schemaVersion": "1.0",
+  "shiftId": "SYNTHETIC-2026-08-04-EVE-UNIT-A",
+  "revision": 3,
+  "generatedAt": "2026-08-04T14:00:00-07:00",
+  "updatedAt": "2026-08-04T18:05:00-07:00",
+  "updatedBy": "workforce-user-id",
+  "residentId": "approved-internal-id",
+  "carePlanVerifiedAt": "2026-08-04T13:55:00-07:00",
+  "tasks": [],
+  "handoff": {
+    "outstanding": [],
+    "escalations": [],
+    "acceptedAt": null
+  }
+}
+
+This example is synthetic. Production identifiers and retention rules must be defined by Santé, and the sheet must not create a shadow medical record.
+
+Section 4 — One-Page Executive Proposal for the ADON
+
+Proposal: Standardized CNA Shift Handoff and Task Sheet
+
+Decision requested: Approve a 30-day, one-unit paper pilot of a standardized CNA shift report sheet, while restricting the current web app to synthetic data until Privacy/Security and IT approve a production design.
+
+Problem
+
+Current informal brain sheets vary by individual CNA. High-risk instructions—transfer method, diet/liquid consistency, toileting, skin/offloading, isolation, and time-critical tasks—may be scattered, abbreviated differently, copied forward, or omitted. Handoff quality depends too heavily on memory.
+
+Proposed solution
+
+One facility-approved, black-and-white landscape form using current care-plan instructions.
+
+Standard resident sequence: status/change, assistance needs, shift-focus tasks, escalation/outstanding items, and read-back.
+
+12-resident summary, 8-resident standard, and 4-resident high-acuity versions with identical terminology.
+
+Time-specific completion boxes for meals, I&O, BM, individualized repositioning, bathing, vitals/weight, and BG when assigned.
+
+A secure digital version only after access, audit, BAA/vendor, retention, EHR reconciliation, and incident-response controls are approved.
+
+Expected benefits
+
+Safer care: Makes resident-specific transfer, diet, isolation, fall-prevention, skin/offloading, and escalation instructions visible at handoff.
+
+Fewer omissions: Time-specific task boxes make completed, refused, not-due, and outstanding work distinguishable.
+
+Faster handoff: A consistent sequence reduces searching and repeated explanation; receiver read-back confirms high-risk items.
+
+Person-centered care: Preferred name, communication support, routine, cueing, and effective approaches travel with the assignment.
+
+Low implementation cost: The template and code can be openly licensed after branding/legal review, but compliance operations and managed infrastructure are not cost-free.
+
+Non-negotiable safeguards
+
+The EHR/current care plan remains the source of truth; discrepancies go to the licensed nurse.
+
+The sheet contains minimum necessary PHI, stays secured, and is disposed of per policy.
+
+No personal cloud accounts, personal devices, public links, plaintext JSON sharing, or PHI in GitHub.
+
+CNA tasks remain within Arizona scope, documented competency, delegation, job description, and facility policy.
+
+No universal Q2H turning, blanket alarms, oxygen titration, diet reinterpretation, or subjective behavior labels.
+
+Pilot and measures
+
+Interdisciplinary team approves fields, abbreviations, escalation rules, and disposal/retention.
+
+Train pilot staff with two synthetic handoff scenarios and competency/read-back checks.
+
+Pilot on one unit for 30 days; conduct weekly five-sheet audits.
+
+Compare baseline vs. pilot:
+
+median handoff duration;
+
+percentage of high-risk fields complete/current;
+
+number of missing/ambiguous transfer and diet instructions;
+
+percentage of time-specific tasks clearly resolved or handed off;
+
+late corrections/duplicate documentation;
+
+privacy incidents and unsecured sheets;
+
+CNA/nurse usability rating.
+
+Review falls and pressure injuries as lagging, multi-factor outcomes; do not claim the form alone caused a change.
+
+Approval path
+
+ADON/DON → Privacy/Security & HIM → Infection Prevention → Dietary/SLP → Therapy → IT → QAPI/pilot approval
+
+Section 5 — GitHub Prototype Review
+
+Repository reviewed: Ethan-da-Tech-Wizard/Report_Sheet, default branch main, on August 4, 2026.
+
+5.1 What works
+
+Four-file, no-build static prototype is easy to open and understand.
+
+Resident output escapes <, >, &, and quotes before rendering.
+
+CSS includes Letter landscape @page rules, monochrome print overrides, and break-inside protection.
+
+Layout selector supports 12-, 8-, 4-, and 1-resident grid classes.
+
+Modal supports the requested broad care domains.
+
+JavaScript passes node --check syntax validation.
+
+5.2 Production blockers
+
+Severity
+
+Finding
+
+Required correction
+
+Critical
+
+Resident details are stored in browser localStorage and exported as plaintext JSON.
+
+Synthetic data only until an approved authenticated, audited, access-controlled, encrypted architecture and retention policy exist. Remove/disable export for live PHI unless specifically approved.
+
+Critical
+
+No authentication, authorization, audit trail, session control, centralized deletion, conflict detection, or EHR reconciliation.
+
+Build or integrate approved identity, server-side policy enforcement, audit, revision control, and source-of-truth reconciliation.
+
+High
+
+“Demo” residents load automatically when storage is empty, before the user clicks Demo Data.
+
+Start with an empty state; make synthetic demo loading explicit and visibly watermarked.
+
+High
+
+Checkboxes are transient, undated, and not resident task events; a single Turn Q2H or BM 1/2/3 box is clinically ambiguous.
+
+Use care-plan-derived time boxes and explicit done/refused/not-due/escalated states; persist only in the approved system.
+
+High
+
+Shift metadata is incomplete on export/import: nurse name is not exported; imported date is not restored; metadata is not included in autosave.
+
+Define a versioned schema, validate all fields, preserve required metadata, and add revision/updated-at tracking.
+
+High
+
+Layout selection changes CSS but does not enforce resident count or pagination. The 1-resident print layout has no dedicated print rule.
+
+Paginate deterministically and test 1/4/8/12 records with worst-case approved content.
+
+High
+
+Print labels reach 6.5 pt and values 7.5 pt; 12 detailed cards plus footer may not remain usable on actual printers.
+
+Maintain ≥8 pt body, cap content, provide a two-page fallback, and perform printer/copier acceptance testing.
+
+High
+
+Clinical terms include ambiguous FC, legacy texture labels, blanket Q2H, and oxygen flow displayed without a no-titration guardrail.
+
+Replace with facility-approved terms and scope-safe instructions from Sections 1–2.
+
+High
+
+Public repo contains Santé name/branding and plausible resident examples. No LICENSE or LICENSE.md is present even though README says “Open-Source.”
+
+Use generic fictional branding unless written permission exists; add an OSI-approved license only after ownership/branding review; retain synthetic-data notice.
+
+Medium
+
+Google Fonts and Lucide load from public CDNs. Offline rendering, content-security policy, vendor review, and reproducibility are not addressed.
+
+Remove unnecessary dependencies or self-host approved pinned assets; add a restrictive Content Security Policy. Print must use system fonts.
+
+Medium
+
+JSON import checks only whether residents is an array; field types, limits, schema version, extra properties, and file size are not validated.
+
+Validate against a strict schema server-side and client-side; reject malformed/oversized input safely.
+
+Medium
+
+README describes cloud/Google Docs/OneDrive “integration,” but the implementation only downloads/uploads a JSON file.
+
+Rename as local JSON import/export or implement an approved, authenticated integration.
+
+Medium
+
+No automated tests, accessibility audit, print regression artifacts, privacy threat model, or deployment documentation.
+
+Add unit/schema tests, browser/print tests, WCAG checks, security review, and a synthetic-only demo deployment policy.
+
+5.3 Recommended next repository milestone
+
+Create a privacy-safe-demo release that contains:
+
+Generic fictional facility name and unmistakably synthetic resident names.
+
+Empty-by-default data; an explicit “Load Synthetic Demo” action.
+
+No local persistence or JSON export unless a prominent DEMO DATA ONLY—NO PHI mode is active.
+
+Revised structured fields and unambiguous legend from this document.
+
+Deterministic print pagination with ≥8 pt body text and per-layout visual regression PDFs.
+
+A SECURITY.md, privacy/threat-model document, contribution rules forbidding PHI, and an appropriate license after ownership review.
+
+A clear README statement: “Not a medical device, medical record, EHR, or production PHI system.”
+
+References
+
+42 CFR §483.21 — Comprehensive person-centered care planning
+
+42 CFR §483.25 — Quality of care
+
+CMS State Operations Manual, Appendix PP
+
+Arizona State Board of Nursing — Nursing Assistant Frequently Asked Questions
+
+AHRQ TeamSTEPPS 3.0
+
+AHRQ Long-Term-Care Teamwork and Communication
+
+AHRQ Pressure-Injury Care Planning
+
+CDC Isolation Precautions — Summary of Recommendations
+
+HHS HIPAA Cloud Computing Guidance
+
+HHS HIPAA Security Rule Summary
+
+HHS Minimum Necessary Guidance
+
+HHS PHI Disposal Guidance
+
+IDDSI Standard Framework
+
+Research cutoff / access date: August 4, 2026. Facility counsel, policy owners, and clinical leadership should confirm all requirements before adoption.
