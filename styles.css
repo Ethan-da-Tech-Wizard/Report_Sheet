@@ -222,10 +222,81 @@ body {
   gap: 12px;
 }
 
+.grid-quick-grid {
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+}
 .grid-12 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 .grid-8  { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
 .grid-4  { grid-template-columns: repeat(2, 1fr); }
 .grid-1  { grid-template-columns: 1fr; }
+
+/* Quick-Flow Speed Card Styling */
+.quick-card {
+  border-left: 5px solid var(--primary);
+  background: #1e293b;
+}
+
+.quick-card.card-dnr {
+  border-left-color: var(--accent-gold);
+}
+
+.quick-card.card-fall {
+  border-top: 2px solid var(--danger);
+}
+
+.quick-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.speed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-transfer { background: #065f46; color: #6ee7b7; }
+.badge-diet { background: #854d0e; color: #fde047; }
+.badge-safety { background: #881337; color: #fda4af; }
+.badge-bowel { background: #1e3a8a; color: #93c5fd; }
+.badge-shower { background: #4c1d95; color: #c4b5fd; }
+
+.quick-track-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+  gap: 4px;
+  background: var(--bg-dark);
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  margin-top: 4px;
+}
+
+.track-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.track-item input[type="text"] {
+  background: #0f172a;
+  border: 1px solid var(--border-color);
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin-top: 2px;
+  width: 100%;
+}
 
 /* Resident Card Component (Digital Screen view) */
 .res-card {
@@ -557,6 +628,11 @@ body {
     width: 100% !important;
   }
 
+  .grid-quick-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
+  }
+
   .grid-12 {
     grid-template-columns: repeat(4, 1fr) !important;
     grid-template-rows: repeat(3, 1fr) !important;
@@ -570,6 +646,40 @@ body {
   .grid-4 {
     grid-template-columns: repeat(2, 1fr) !important;
     grid-template-rows: repeat(2, 1fr) !important;
+  }
+
+  .speed-badge {
+    background: transparent !important;
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+    font-size: 6.5pt !important;
+    font-weight: 800 !important;
+    padding: 1px 3px !important;
+  }
+
+  .quick-track-bar {
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    padding: 2px !important;
+    gap: 2px !important;
+  }
+
+  .track-item span {
+    font-size: 5.5pt !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+  }
+
+  .track-item input[type="text"] {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #000000 !important;
+    color: #000000 !important;
+    font-size: 6.5pt !important;
+    font-weight: bold !important;
+    padding: 0 !important;
   }
 
   /* Printable B&W Resident Card */

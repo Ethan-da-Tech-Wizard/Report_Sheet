@@ -177,7 +177,8 @@ function updateDateDefault() {
 function renderGrid() {
   const gridContainer = document.getElementById('residentGrid');
   const layoutSelect = document.getElementById('layoutSelect');
-  const layoutClass = `grid-${layoutSelect.value.split('-')[0]}`;
+  const layoutValue = layoutSelect.value;
+  const layoutClass = `grid-${layoutValue}`;
   
   gridContainer.className = `resident-grid ${layoutClass}`;
   gridContainer.innerHTML = '';
@@ -194,9 +195,11 @@ function renderGrid() {
 
   residentsData.forEach((res, index) => {
     const card = document.createElement('div');
-    card.className = 'res-card';
+    const isDNR = (res.codeStatus || '').toUpperCase().includes('DNR');
+    const isFall = (res.safety || '').toLowerCase().includes('fall');
     
-    const codeClass = res.codeStatus.includes('DNR') ? 'code-dnr' : 'code-full';
+    card.className = `res-card quick-card ${isDNR ? 'card-dnr' : ''} ${isFall ? 'card-fall' : ''}`;
+    const codeClass = isDNR ? 'code-dnr' : 'code-full';
 
     card.innerHTML = `
       <div class="res-header">
@@ -205,45 +208,56 @@ function renderGrid() {
         <span class="res-code-badge ${codeClass}">${escapeHtml(res.codeStatus || 'CODE')}</span>
       </div>
 
-      <div class="res-section">
+      <!-- Quick Action Badges (Instant Glance) -->
+      <div class="quick-badge-row">
+        <span class="speed-badge badge-transfer" title="Mobility & Transfer"><i data-lucide="activity"></i> ${escapeHtml(res.transfer || 'Indep')}</span>
+        <span class="speed-badge badge-diet" title="Diet & Texture"><i data-lucide="utensils"></i> ${escapeHtml(res.diet || 'Regular')}</span>
+        <span class="speed-badge badge-bowel" title="Elimination"><i data-lucide="shield"></i> ${escapeHtml(res.bowelBladder || 'Indep')}</span>
+        <span class="speed-badge badge-shower" title="Shower Schedule"><i data-lucide="droplet"></i> ${escapeHtml(res.shower || 'No Shwr')}</span>
+      </div>
+
+      <div class="res-section" style="margin-top: 6px;">
         <div class="res-field">
-          <span class="res-label">DIET / FLUID:</span>
-          <span class="res-val">${escapeHtml(res.diet || 'Regular')} | ${escapeHtml(res.fluid || 'Independent')}</span>
+          <span class="res-label">FLUID / I&O:</span>
+          <span class="res-val">${escapeHtml(res.fluid || 'Independent')}</span>
         </div>
         <div class="res-field">
-          <span class="res-label">MOBILITY / ASSIST:</span>
-          <span class="res-val">${escapeHtml(res.transfer || 'Independent')}</span>
-        </div>
-        <div class="res-field">
-          <span class="res-label">BOWEL / BLADDER:</span>
-          <span class="res-val">${escapeHtml(res.bowelBladder || 'Independent')}</span>
-        </div>
-        <div class="res-field">
-          <span class="res-label">SHOWER / ADL:</span>
-          <span class="res-val">${escapeHtml(res.shower || 'None')} (${escapeHtml(res.adlLevel || 'Assist')})</span>
-        </div>
-        <div class="res-field">
-          <span class="res-label">VITALS / ACCU-CHEK:</span>
+          <span class="res-label">VITALS & ACCU-CHEK:</span>
           <span class="res-val">${escapeHtml(res.vitalsFreq || 'Q Shift')} | ${escapeHtml(res.accuChek || 'N/A')}</span>
         </div>
-        <div class="res-field">
-          <span class="res-label">SAFETY / PRECAUTIONS:</span>
-          <span class="res-val">${escapeHtml(res.safety || 'Standard')}</span>
+        <div class="res-field" style="grid-column: 1 / -1;">
+          <span class="res-label">SAFETY & PRECAUTIONS:</span>
+          <span class="res-val" style="color: ${isFall ? 'var(--accent-gold)' : 'inherit'}; font-weight: 700;">${escapeHtml(res.safety || 'Standard Precautions')}</span>
         </div>
       </div>
 
-      <div class="res-field" style="grid-column: 1 / -1;">
-        <span class="res-label">SHIFT NOTES / FOCUS:</span>
-        <span class="res-val" style="font-size: 0.75rem; font-style: italic;">${escapeHtml(res.notes || 'No special notes')}</span>
+      <div class="res-field" style="grid-column: 1 / -1; margin-top: 2px;">
+        <span class="res-label">FOCUS & HANDOFF NOTES:</span>
+        <span class="res-val" style="font-size: 0.76rem; font-style: italic; color: #38bdf8;">${escapeHtml(res.notes || 'Routine care.')}</span>
       </div>
 
-      <!-- Quick Shift Checklist Trackers -->
-      <div class="res-checkboxes">
-        <label class="check-label"><input type="checkbox"> Vit/Wt</label>
-        <label class="check-label"><input type="checkbox"> Meal %</label>
-        <label class="check-label"><input type="checkbox"> BM 1/2/3</label>
-        <label class="check-label"><input type="checkbox"> Turn Q2H</label>
-        <label class="check-label"><input type="checkbox"> Shower</label>
+      <!-- Time-Specific Shift Trackers -->
+      <div class="quick-track-bar">
+        <div class="track-item">
+          <span>VS / WT</span>
+          <input type="text" placeholder="___/___">
+        </div>
+        <div class="track-item">
+          <span>MEAL %</span>
+          <input type="text" placeholder="B_ L_ D_">
+        </div>
+        <div class="track-item">
+          <span>BM TIME</span>
+          <input type="text" placeholder="Time/__">
+        </div>
+        <div class="track-item">
+          <span>TURN Q2H</span>
+          <input type="text" placeholder="08/10/12">
+        </div>
+        <div class="track-item">
+          <span>SHOWER</span>
+          <input type="text" placeholder="Done/Ref">
+        </div>
       </div>
 
       <div class="res-actions no-print">
