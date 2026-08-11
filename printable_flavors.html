@@ -56,6 +56,9 @@
       font-size: 0.82rem;
       font-weight: bold;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .action-btn-green {
@@ -77,6 +80,13 @@
     }
     .action-btn-purple:hover {
       background: #7e22ce;
+    }
+
+    .action-btn-indigo {
+      background: #4f46e5;
+    }
+    .action-btn-indigo:hover {
+      background: #4338ca;
     }
 
     /* Page Canvas (Screen View) */
@@ -215,6 +225,7 @@
     <div class="toolbar-title">🏥 PointClickCare (PCC) Universal Master CNA Sheet</div>
     
     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <button class="action-btn action-btn-indigo" onclick="downloadWordDoc()">📥 Download as Word (.doc)</button>
       <button id="btnOrientationToggle" class="action-btn action-btn-purple" onclick="toggleOrientation()">📐 Switch to Portrait View</button>
       <button class="action-btn action-btn-amber" onclick="togglePromptText()">🔄 Toggle Prompts / Blank</button>
       <button class="action-btn" onclick="addTableRow()">+ Add Patient Row</button>
@@ -314,6 +325,37 @@
   <script>
     let isBlankMode = false;
     let isPortraitMode = false;
+
+    function downloadWordDoc() {
+      const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head>
+        <meta charset='utf-8'>
+        <title>PointClickCare Universal Master CNA Shift Worksheet</title>
+        <style>
+          @page WordSection1 { size: 11in 8.5in; margin: 0.25in; mso-page-orientation: landscape; }
+          div.WordSection1 { page: WordSection1; }
+          body { font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; color: #000; }
+          table { width: 100%; border-collapse: collapse; margin-bottom: 4px; table-layout: fixed; }
+          td, th { border: 1px solid #000; padding: 4px; text-align: left; vertical-align: top; height: 52px; line-height: 1.35; }
+          th { background: #e2e8f0; color: #000; font-weight: bold; text-transform: uppercase; font-size: 7pt; text-align: center; }
+          .pcc-header-bar { border: 1.5px solid #000; padding: 4px 8px; margin-bottom: 6px; font-weight: bold; font-size: 8.5pt; }
+          .micro-chk { display: inline-block; width: 8.5px; height: 8.5px; border: 1px solid #000; margin-right: 1.5px; }
+          .line-blank { display: inline-block; border-bottom: 1px solid #000; min-height: 10px; }
+        </style>
+      </head>
+      <body><div class="WordSection1">`;
+      const footer = `</div></body></html>`;
+      const content = document.querySelector('.sheet-container').innerHTML;
+      const blob = new Blob(['\ufeff' + header + content + footer], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'PointClickCare_Universal_Master_Worksheet.doc';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
     function toggleOrientation() {
       isPortraitMode = !isPortraitMode;
