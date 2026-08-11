@@ -3,207 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SANTÉ OF MESA — CNA Master Shift Handoff & Report Sheet</title>
+  <title>SANTÉ CNA Master Shift Report & Brain Sheet</title>
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-dark">
-
-  <!-- Application Controls Header (Screen Only) -->
+  <!-- Application Header (Screen Only) -->
   <header class="app-header no-print">
     <div class="header-brand">
-      <div class="logo-icon"><i data-lucide="clipboard-check"></i></div>
+      <div class="logo-icon"><i data-lucide="clipboard-plus"></i></div>
       <div class="brand-text">
-        <h1>SANTÉ <span>MESA</span></h1>
-        <p class="subtitle">Standardized CNA Shift Report & Handoff Matrix</p>
+        <h1>SANTÉ <span>Mesa</span></h1>
+        <p class="subtitle">CNA Master Shift Brain & Handoff System</p>
       </div>
     </div>
 
     <div class="header-controls">
-      <!-- View Switcher -->
+      <!-- Layout Mode Selector -->
       <div class="control-group">
-        <label for="viewModeSelect"><i data-lucide="table"></i> View Format:</label>
-        <select id="viewModeSelect" class="select-input">
-          <option value="table" selected>📋 B&W Row & Column Table (Full Master Matrix)</option>
-          <option value="quick-grid">⚡ Quick-Flow Speed Cards (Grid View)</option>
-          <option value="12-grid">12-Resident Compact Grid</option>
-          <option value="8-grid">8-Resident Standard Grid</option>
-          <option value="4-grid">4-Resident High-Acuity Grid</option>
+        <label for="layoutSelect"><i data-lucide="layout-grid"></i> Print Layout:</label>
+        <select id="layoutSelect" class="select-input">
+          <option value="12-grid">12 Residents (Compact 1-Page Shift)</option>
+          <option value="8-grid" selected>8 Residents (Standard Skilled Care)</option>
+          <option value="4-grid">4 Residents (High-Acuity / Detailed)</option>
+          <option value="1-grid">1 Resident (Comprehensive Care Plan)</option>
         </select>
       </div>
 
       <!-- Action Buttons -->
       <div class="btn-group">
-        <button id="btnQuickDemo" class="btn btn-secondary" title="Reload all 12 filled-out residents">
-          <i data-lucide="rotate-ccw"></i> Reset Full 12 Data
+        <button id="btnNewShift" class="btn btn-primary" style="background: #2563eb;" title="Start a new shift or carry forward yesterday's roster">
+          <i data-lucide="rotate-ccw"></i> Start Shift
+        </button>
+        <button id="btnShiftHistory" class="btn btn-secondary" title="View past shift history">
+          <i data-lucide="history"></i> History
+        </button>
+        <button id="btnQuickDemo" class="btn btn-secondary" title="Load sample CNA shift data">
+          <i data-lucide="sparkles"></i> Demo Data
         </button>
         <button id="btnAddResident" class="btn btn-secondary">
           <i data-lucide="user-plus"></i> Add Resident
         </button>
-        <button id="btnExportJSON" class="btn btn-secondary" title="Save JSON backup">
+        <button id="btnSmartPaste" class="btn btn-secondary" title="Bulk paste roster from PointClickCare/Excel or generate room range">
+          <i data-lucide="clipboard"></i> Smart Paste
+        </button>
+        <button id="btnClearAll" class="btn btn-danger-outline" title="Clear all resident data">
+          <i data-lucide="trash-2"></i> Reset
+        </button>
+        <button id="btnExportJSON" class="btn btn-secondary" title="Save file for cloud/sharing">
           <i data-lucide="download"></i> Backup JSON
         </button>
-        <button id="btnImportJSON" class="btn btn-secondary" title="Load saved JSON file">
+        <button id="btnImportJSON" class="btn btn-secondary" title="Load saved file">
           <i data-lucide="upload"></i> Load JSON
         </button>
-        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        <a href="printable_flavors.html" target="_blank" class="btn btn-secondary" style="text-decoration: none;" title="Open printable sheet templates for 70-bed facility">
+          <i data-lucide="file-text"></i> Printable Flavors
+        </a>
+        <input type="file" id="importFileInput" accept=".json,.csv" style="display: none;">
+        <button id="btnShareSheet" class="btn btn-secondary" style="border-color: var(--primary); color: var(--primary);" title="Share shift sheet to phone via QR code or URL link">
+          <i data-lucide="qr-code"></i> Share / QR
+        </button>
+        <button id="btnCopyEhr" class="btn btn-secondary" title="Copy clean formatted text summary for charting into EHR (PointClickCare)">
+          <i data-lucide="copy-check"></i> Copy for EHR
+        </button>
         <button id="btnPrintBW" class="btn btn-primary btn-print">
-          <i data-lucide="printer"></i> Print B&W Sheet (Cmd+P)
+          <i data-lucide="printer"></i> Print B&W Sheet
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Printable Shift Container (US Letter Landscape Optimized) -->
-  <div class="sheet-container">
-    
-    <!-- Shift Control & Metadata Header Bar (Visible Screen & Print) -->
-    <div class="shift-meta-bar">
-      <div class="meta-item">
-        <span class="meta-label">FACILITY:</span>
-        <input type="text" id="facilityName" value="Santé of Mesa — Skilled Nursing & Post-Acute Rehab" class="meta-input">
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">DATE:</span>
-        <input type="date" id="shiftDate" class="meta-input">
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">SHIFT:</span>
-        <select id="shiftType" class="meta-select">
-          <option value="DAY (06:00 - 14:30)">DAY (06:00 - 14:30)</option>
-          <option value="EVE (14:00 - 22:30)" selected>EVE (14:00 - 22:30)</option>
-          <option value="NOC (22:00 - 06:30)">NOC (22:00 - 06:30)</option>
-          <option value="12H DAY (06:00 - 18:30)">12H DAY (06:00 - 18:30)</option>
-          <option value="12H NOC (18:00 - 06:30)">12H NOC (18:00 - 06:30)</option>
-        </select>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">HALL / UNIT:</span>
-        <input type="text" id="hallUnit" value="Station 1 / Rehab Wing (Rooms 101–112)" class="meta-input">
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">OUTGOING CNA:</span>
-        <input type="text" id="cnaName" value="E. Zavala, CNA" class="meta-input">
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">INCOMING CNA:</span>
-        <input type="text" id="incomingCnaName" placeholder="Incoming CNA Name" class="meta-input">
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">CHARGE NURSE:</span>
-        <input type="text" id="nurseName" value="J. Lee, RN (Ext 402)" class="meta-input">
-      </div>
-      <div class="meta-item doc-version">
-        <span class="meta-label">DOC REV:</span>
-        <span class="doc-rev-text">CNA-HO-01 Rev 2026-08-04</span>
-      </div>
+  <!-- Shift Metadata Bar (Screen & Print) -->
+  <div class="shift-meta-bar">
+    <div class="meta-item editable-field">
+      <span class="meta-label">FACILITY:</span>
+      <input type="text" id="facilityName" value="Santé of Mesa - Skilled Nursing & Rehab" class="meta-input">
     </div>
-
-    <!-- MAIN VIEW 1: B&W ROWS AND COLUMNS MASTER TABLE MATRIX -->
-    <div id="tableMatrixView" class="table-matrix-view active-view">
-      <table class="bw-report-table">
-        <thead>
-          <tr>
-            <th style="width: 50px;">RM #</th>
-            <th style="width: 140px;">RESIDENT NAME & CODE</th>
-            <th style="width: 130px;">MOBILITY & TRANSFER</th>
-            <th style="width: 120px;">DIET / FLUID / I&O</th>
-            <th style="width: 110px;">TOILET & CONTINENCE</th>
-            <th style="width: 80px;">SHOWER / BATH</th>
-            <th style="width: 90px;">VITALS / BG</th>
-            <th style="width: 110px;">SAFETY & PRECAUTIONS</th>
-            <th style="width: 180px;">SHIFT FOCUS & CARE NOTES</th>
-            <th style="width: 130px;">SHIFT ACTION TRACKERS</th>
-            <th style="width: 40px;" class="no-print">ACT</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <!-- Populated dynamically with all 12 filled resident rows -->
-        </tbody>
-      </table>
+    <div class="meta-item editable-field">
+      <span class="meta-label">DATE:</span>
+      <input type="date" id="shiftDate" class="meta-input">
     </div>
-
-    <!-- MAIN VIEW 2: CARDS GRID VIEW (Optional Alternate View) -->
-    <div id="cardsGridView" class="cards-grid-view" style="display: none;">
-      <div id="residentGrid" class="resident-grid grid-quick-grid">
-        <!-- Cards rendered dynamically -->
-      </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">SHIFT:</span>
+      <select id="shiftType" class="meta-select">
+        <option value="DAY (06:00 - 14:30)">DAY (06:00 - 14:30)</option>
+        <option value="EVE (14:00 - 22:30)" selected>EVE (14:00 - 22:30)</option>
+        <option value="NOC (22:00 - 06:30)">NOC (22:00 - 06:30)</option>
+        <option value="12H DAY (06:00 - 18:30)">12H DAY (06:00 - 18:30)</option>
+        <option value="12H NOC (18:00 - 06:30)">12H NOC (18:00 - 06:30)</option>
+      </select>
     </div>
-
-    <!-- Master Footer: Approved Abbreviation Legend, Signatures & Confidentiality -->
-    <footer class="sheet-footer">
-      <div class="footer-legend-grid">
-        <div class="legend-col">
-          <span class="legend-header">CODE & SAFETY:</span>
-          <span><b>FULL</b> = Full Code</span>
-          <span><b>DNR</b> = Do Not Resuscitate</span>
-          <span><b>FALL</b> = Fall Risk Protocol</span>
-          <span><b>ISO</b> = Isolation Precaution</span>
-        </div>
-        <div class="legend-col">
-          <span class="legend-header">MOBILITY / ASSIST:</span>
-          <span><b>1PA/2PA</b> = 1/2-Person Assist</span>
-          <span><b>SBA</b> = Standby Assist</span>
-          <span><b>S2S</b> = Sit-to-Stand Lift</span>
-          <span><b>FML</b> = Full Mechanical Lift</span>
-          <span><b>FWW</b> = Front-Wheeled Walker</span>
-          <span><b>WBAT</b> = Weight Bearing As Tol.</span>
-        </div>
-        <div class="legend-col">
-          <span class="legend-header">DIET & FLUID:</span>
-          <span><b>IDDSI 6</b> = Soft & Bite-Sized</span>
-          <span><b>IDDSI 5</b> = Minced & Moist</span>
-          <span><b>IDDSI 4</b> = Pureed</span>
-          <span><b>IDDSI 2</b> = Mildly Thick</span>
-          <span><b>NPO</b> = Nothing by Mouth</span>
-          <span><b>FR</b> = Fluid Restriction</span>
-        </div>
-        <div class="legend-col">
-          <span class="legend-header">DIAGNOSTICS & TASKS:</span>
-          <span><b>VS</b> = Vital Signs</span>
-          <span><b>BG</b> = Blood Glucose (BS)</span>
-          <span><b>BM</b> = Bowel Movement</span>
-          <span><b>I&O</b> = Strict Intake/Output</span>
-          <span><b>NC</b> = Nasal Cannula O2</span>
-        </div>
-      </div>
-
-      <div class="footer-bottom-bar">
-        <div class="footer-signatures">
-          <span>Outgoing CNA Signature: ___________________________</span>
-          <span>Incoming CNA Read-Back Confirmed [X]: ___________________________</span>
-        </div>
-        <div class="confidential-warning">
-          ⚠️ CONFIDENTIAL PROTECTED HEALTH INFORMATION — KEEP SECURE — DISPOSE IN LOCKED SHRED BIN PER FACILITY POLICY
-        </div>
-      </div>
-    </footer>
-
+    <div class="meta-item editable-field">
+      <span class="meta-label">HALL / UNIT:</span>
+      <input type="text" id="hallUnit" value="Station 1 / Rehab Wing" class="meta-input">
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">CNA NAME:</span>
+      <input type="text" id="cnaName" placeholder="Your Name, CNA" class="meta-input">
+    </div>
+    <div class="meta-item editable-field">
+      <span class="meta-label">NURSE / TEAM:</span>
+      <input type="text" id="nurseName" placeholder="Charge Nurse Name" class="meta-input">
+    </div>
   </div>
 
-  <!-- Resident Edit Modal -->
+  <!-- Main Container -->
+  <main class="main-content">
+    <!-- Batch Actions Bar (Appears when residents are selected) -->
+    <div id="batchActionsBar" class="batch-bar no-print" style="display: none;">
+      <span class="batch-count" id="batchSelectedCount">0 selected</span>
+      <div class="batch-controls">
+        <span>Set Vitals:</span>
+        <button class="batch-btn" onclick="applyBatchEdit('vitalsFreq', 'Q Shift')">Q Shift</button>
+        <button class="batch-btn" onclick="applyBatchEdit('vitalsFreq', 'Q4H Vitals')">Q4H</button>
+        <span>Set Code:</span>
+        <button class="batch-btn" onclick="applyBatchEdit('codeStatus', 'FULL CODE')">Full Code</button>
+        <button class="batch-btn" onclick="applyBatchEdit('codeStatus', 'DNR')">DNR</button>
+        <button class="batch-btn btn-danger" onclick="deleteSelectedResidents()">Delete Selected</button>
+        <button class="batch-btn" onclick="clearBatchSelection()">Clear Selection</button>
+      </div>
+    </div>
+
+    <!-- Resident Grid Container -->
+    <div id="residentGrid" class="resident-grid grid-8">
+      <!-- Resident Cards will be rendered dynamically here -->
+    </div>
+  </main>
+
+  <!-- Shift Quick Summary & Legend Footer (Print & Screen) -->
+  <footer class="sheet-footer">
+    <div class="footer-legend">
+      <span class="legend-title">CNA LEGEND / CODES:</span>
+      <span class="legend-tag"><b>DNR</b> = Do Not Resuscitate</span>
+      <span class="legend-tag"><b>FC</b> = Full Code</span>
+      <span class="legend-tag"><b>1PA</b> = 1-Person Assist</span>
+      <span class="legend-tag"><b>2PA</b> = 2-Person Assist</span>
+      <span class="legend-tag"><b>S2S</b> = Sit-to-Stand Lift</span>
+      <span class="legend-tag"><b>HOYER</b> = Mechanical Lift</span>
+      <span class="legend-tag"><b>NPO</b> = Nothing By Mouth</span>
+      <span class="legend-tag"><b>I&O</b> = Intake & Output</span>
+      <span class="legend-tag"><b>BM</b> = Bowel Movement</span>
+    </div>
+    <div class="footer-signature">
+      <span>CNA Handoff Signature: ___________________________</span>
+      <span>On-Coming CNA: ___________________________</span>
+    </div>
+  </footer>
+
+  <!-- Modal for Adding/Editing Detailed Resident (Screen Only) -->
   <div id="residentModal" class="modal no-print">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modalTitle">Edit Resident Data</h2>
+        <h2 id="modalTitle">Edit Resident Details</h2>
         <button class="close-btn" id="btnCloseModal">&times;</button>
       </div>
+
+      <!-- Quick Archetype Presets Bar -->
+      <div class="preset-bar">
+        <span class="preset-label">⚡ 1-Tap Presets:</span>
+        <button type="button" class="preset-chip" onclick="applyPreset('independent')">Independent</button>
+        <button type="button" class="preset-chip" onclick="applyPreset('standby')">Standby Assist</button>
+        <button type="button" class="preset-chip" onclick="applyPreset('total')">Total Care / Heavy</button>
+      </div>
+
       <form id="residentForm" class="modal-body">
         <input type="hidden" id="modalResidentId">
         
         <div class="form-row">
           <div class="form-group col-3">
-            <label>Room / Bed #</label>
-            <input type="text" id="mRoom" placeholder="e.g. 101-A" required>
+            <label>Room #</label>
+            <input type="text" id="mRoom" placeholder="e.g. 104-A" required>
           </div>
           <div class="form-group col-6">
             <label>Resident Full Name / Preferred</label>
-            <input type="text" id="mName" placeholder="e.g. Davis, Robert (prefers 'Bob')" required>
+            <input type="text" id="mName" placeholder="e.g. Smith, John" required>
           </div>
           <div class="form-group col-3">
             <label>Code Status</label>
@@ -218,52 +196,60 @@
 
         <div class="form-row">
           <div class="form-group col-4">
-            <label>Diet / Food Texture (IDDSI)</label>
-            <input type="text" id="mDiet" placeholder="Regular, IDDSI 6 Mech Soft, IDDSI 4 Puree, NPO">
+            <label>Diet / Texture</label>
+            <input type="text" id="mDiet" list="dietList" placeholder="Regular, Mech Soft, Puree, Honey Thick, NPO">
           </div>
           <div class="form-group col-4">
-            <label>Fluid Plan / I&O</label>
-            <input type="text" id="mFluid" placeholder="Encourage / 1500mL FR (Allot 500mL) / Strict I&O">
+            <label>Fluid Restriction / Assist</label>
+            <input type="text" id="mFluid" list="fluidList" placeholder="1500mL Restr / Feed Assist / Independent">
           </div>
           <div class="form-group col-4">
-            <label>Mobility & Transfer Assist</label>
-            <input type="text" id="mTransfer" placeholder="1PA + FWW / 2PA S2S / 2PA Full Lift (Hoyer)">
+            <label>Transfer / Mobility</label>
+            <select id="mTransfer">
+              <option value="Independent">Independent</option>
+              <option value="Supervision / Standby">Supervision / Standby</option>
+              <option value="1PA (1-Person Assist)">1PA (1-Person Assist)</option>
+              <option value="2PA (2-Person Assist)">2PA (2-Person Assist)</option>
+              <option value="Sit-to-Stand (S2S)">Sit-to-Stand (S2S)</option>
+              <option value="Hoyer / Full Lift">Hoyer / Full Mechanical Lift</option>
+              <option value="Wheelchair Dependent">Wheelchair Dependent</option>
+            </select>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group col-4">
-            <label>Toileting & Continence</label>
-            <input type="text" id="mBowelBladder" placeholder="Brief L / Foley Q-Shift / Ostomy / Toilet Q2H">
-          </div>
-          <div class="form-group col-4">
-            <label>Shower Schedule</label>
-            <input type="text" id="mShower" placeholder="Today EVE / Tue-Fri / Bed Bath">
+            <label>Continence / Elimination</label>
+            <input type="text" id="mBowelBladder" list="bowelList" placeholder="Brief L / Foley Catheter / Ostomy / Independent">
           </div>
           <div class="form-group col-4">
             <label>ADL Assist Level</label>
-            <input type="text" id="mAdlLevel" placeholder="Setup / Mod Assist / Total Care">
+            <input type="text" id="mAdlLevel" list="adlList" placeholder="Total Care / Setup / Moderate Assist">
+          </div>
+          <div class="form-group col-4">
+            <label>Shower / Bath Schedule</label>
+            <input type="text" id="mShower" placeholder="Today EVE / Mon-Thu / Bed Bath">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group col-4">
             <label>Vitals Frequency</label>
-            <input type="text" id="mVitalsFreq" placeholder="Q Shift (08/16) / Q4H / BID">
-          </div>
-          <div class="form-group col-4">
-            <label>Blood Glucose (BG / Accu-Chek)</label>
-            <input type="text" id="mAccuChek" placeholder="AC & HS / 11:30 & 16:30 / N/A">
+            <input type="text" id="mVitalsFreq" list="vitalsList" placeholder="Q Shift / Q4H / BID / Weight Today">
           </div>
           <div class="form-group col-4">
             <label>Safety & Precautions</label>
-            <input type="text" id="mSafety" placeholder="Fall Risk, Bed Low, Contact Iso, O2 2L NC">
+            <input type="text" id="mSafety" list="safetyList" placeholder="Fall Risk, Bed Low, Alarm, Contact Iso, O2 2L">
+          </div>
+          <div class="form-group col-4">
+            <label>Accu-Chek / Blood Sugar</label>
+            <input type="text" id="mAccuChek" list="accuChekList" placeholder="AC&HS / 11:30 & 16:30 / N/A">
           </div>
         </div>
 
         <div class="form-group">
-          <label>Shift Focus, Skin/Turn Schedule, Behaviors & Special Orders</label>
-          <textarea id="mNotes" rows="3" placeholder="e.g. Turn Q2H (08/10/12/14), float heels, left hip post-op precautions, OT at 10:00..."></textarea>
+          <label>Shift Focus, Wounds, Behaviors & Special Instructions</label>
+          <textarea id="mNotes" rows="3" placeholder="e.g. Reposition Q2H, prefers right side, left heel dressing dry, wandering in evening..."></textarea>
         </div>
 
         <div class="modal-footer">
@@ -271,6 +257,218 @@
           <button type="submit" class="btn btn-primary">Save Resident</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Smart Suggestions Datalists -->
+  <datalist id="dietList">
+    <option value="Regular Diet">
+    <option value="Mechanical Soft">
+    <option value="Minced & Moist">
+    <option value="Puree Diet">
+    <option value="Soft & Bite-Sized">
+    <option value="NPO (Nothing By Mouth)">
+    <option value="NAS (No Added Salt)">
+  </datalist>
+
+  <datalist id="fluidList">
+    <option value="Thin Liquids">
+    <option value="Nectar Thick">
+    <option value="Honey Thick">
+    <option value="Pudding Thick">
+    <option value="Encourage Fluids">
+    <option value="1500mL Fluid Restr">
+    <option value="Feed Assist">
+    <option value="NPO - IV Fluids">
+  </datalist>
+
+  <datalist id="bowelList">
+    <option value="Independent">
+    <option value="Brief S / Contine">
+    <option value="Brief M / BM Check">
+    <option value="Brief L / Contine">
+    <option value="Incontinent / Brief XL">
+    <option value="Foley Catheter">
+    <option value="Ostomy Bag">
+    <option value="Urinal / Standby">
+  </datalist>
+
+  <datalist id="adlList">
+    <option value="Independent">
+    <option value="Setup Assist">
+    <option value="Min Assist">
+    <option value="Mod Assist">
+    <option value="High Assist">
+    <option value="Total Care">
+  </datalist>
+
+  <datalist id="vitalsList">
+    <option value="Q Shift">
+    <option value="Q Shift (08/16)">
+    <option value="Q4H Vitals">
+    <option value="BID (Vitals)">
+    <option value="Q2H Vitals">
+  </datalist>
+
+  <datalist id="safetyList">
+    <option value="Fall Risk / Alarm">
+    <option value="Bed Low / Mat">
+    <option value="Self-Transfer">
+    <option value="Wandering / Elopement">
+    <option value="O2 2L NC / Droplet">
+    <option value="Left side weakness">
+    <option value="Skin integrity / Heel protectors">
+    <option value="Strict Bedrest">
+  </datalist>
+
+  <!-- Modal for Starting New Shift / Carry Forward -->
+  <div id="newShiftModal" class="modal no-print">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2>🔄 Start My Shift</h2>
+        <button class="close-btn" id="btnCloseNewShiftModal">&times;</button>
+      </div>
+      <div class="modal-body" style="gap: 16px; text-align: center; padding: 24px;">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Ready to start your shift? Choose how you want to load your residents and update your shift date.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+          <button id="btnCarryForward" class="btn btn-primary" style="padding: 14px; font-size: 0.95rem; justify-content: center; background: #0284c7;">
+            <i data-lucide="copy"></i> Copy Last Shift (Keep Residents, Reset Checkboxes)
+          </button>
+          
+          <button id="btnPickHistory" class="btn btn-secondary" style="padding: 12px; font-size: 0.9rem; justify-content: center;">
+            <i data-lucide="history"></i> Pick From Past Shift History...
+          </button>
+
+          <button id="btnStartBlank" class="btn btn-danger-outline" style="padding: 12px; font-size: 0.9rem; justify-content: center;">
+            <i data-lucide="file-plus"></i> Start Fresh (Blank Sheet)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Shift History (14-Day Rolling Archive) -->
+  <div id="historyModal" class="modal no-print">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2>📜 Shift History (Last 14 Days)</h2>
+        <button class="close-btn" id="btnCloseHistoryModal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 16px; max-height: 70vh; overflow-y: auto;">
+        <div id="historyListContainer" style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- History items rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  <!-- Modal for Smart Paste & Room Range Generator -->
+  <div id="smartPasteModal" class="modal no-print">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2>📋 Smart Paste & Room Generator</h2>
+        <button class="close-btn" id="btnCloseSmartPasteModal">&times;</button>
+      </div>
+      <div class="modal-body" style="gap: 16px; padding: 20px;">
+        <!-- Option A: Bulk Paste -->
+        <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+          <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Option 1: Paste Assignment Text</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">
+            Copy lines from PointClickCare or Excel (e.g. <code>101-A Smith, John FULL CODE</code>) and paste below:
+          </p>
+          <textarea id="smartPasteTextarea" rows="4" style="width: 100%; font-family: var(--font-mono); font-size: 0.85rem;" placeholder="101-A  Davis, Robert  FULL CODE&#10;102-B  Martinez, Elena  DNR&#10;105-A  Johnson, Clara  DNR/DNI"></textarea>
+          <button id="btnParsePasteText" class="btn btn-primary" style="margin-top: 8px; font-size: 0.85rem;">
+            <i data-lucide="sparkles"></i> Parse & Add Residents
+          </button>
+        </div>
+
+        <!-- Option B: Room Range Generator -->
+        <div>
+          <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Option 2: Generate Room Range</h3>
+          <div style="display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 100px;">
+              <label style="font-size: 0.75rem; color: var(--text-muted);">Start Room #</label>
+              <input type="number" id="rangeStartRoom" value="101" min="1" max="999" style="width: 100%;">
+            </div>
+            <div style="flex: 1; min-width: 100px;">
+              <label style="font-size: 0.75rem; color: var(--text-muted);">Count</label>
+              <input type="number" id="rangeCount" value="8" min="1" max="20" style="width: 100%;">
+            </div>
+            <div style="flex: 1; min-width: 110px;">
+              <label style="font-size: 0.75rem; color: var(--text-muted);">Beds Suffix</label>
+              <select id="rangeSuffix" style="width: 100%;">
+                <option value="single">Single (101, 102...)</option>
+                <option value="AB" selected>A/B Beds (101-A, 101-B...)</option>
+              </select>
+            </div>
+            <button id="btnGenerateRange" class="btn btn-secondary" style="font-size: 0.85rem; height: 35px;">
+              <i data-lucide="plus-circle"></i> Generate Rooms
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Modal for Share Sheet / QR Code -->
+  <div id="shareModal" class="modal no-print">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2>📱 Transfer to Phone / Share QR</h2>
+        <button class="close-btn" id="btnCloseShareModal">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; gap: 16px; padding: 24px;">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Scan this QR code with your phone camera to transfer your entire shift sheet offline.
+        </p>
+
+        <!-- QR Code Canvas Container -->
+        <div id="qrCodeContainer" style="background: white; padding: 16px; border-radius: 12px; display: inline-block; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+          <div id="qrCanvas"></div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 8px;">
+          <button id="btnCopyShareLink" class="btn btn-primary" style="font-size: 0.85rem;">
+            <i data-lucide="link"></i> Copy Share Link
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Copy for EHR -->
+  <div id="ehrModal" class="modal no-print">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2>📋 Copy Summary for EHR Charting</h2>
+        <button class="close-btn" id="btnCloseEhrModal">&times;</button>
+      </div>
+      <div class="modal-body" style="gap: 12px; padding: 20px;">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Clean formatted shift text ready to copy & paste into PointClickCare, MatrixCare, or nurse progress notes:
+        </p>
+        <textarea id="ehrTextarea" rows="10" style="width: 100%; font-family: var(--font-mono); font-size: 0.8rem;" readonly></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button id="btnCopyEhrText" class="btn btn-primary">
+            <i data-lucide="copy"></i> Copy to Clipboard
+          </button>
+        </div>
+      </div>
+    </div>
+  <!-- Mobile Floating Action Button (FAB) (Screen Only) -->
+  <div class="fab-container no-print">
+    <button class="fab-btn" id="fabMainBtn" title="Quick Mobile Menu">
+      <i data-lucide="plus"></i>
+    </button>
+    <div class="fab-menu" id="fabMenu">
+      <button onclick="document.getElementById('btnAddResident').click(); toggleFabMenu();" class="fab-item">
+        <i data-lucide="user-plus"></i> Add Resident
+      </button>
+      <button onclick="document.getElementById('btnNewShift').click(); toggleFabMenu();" class="fab-item">
+        <i data-lucide="rotate-ccw"></i> Start Shift
+      </button>
+      <button onclick="document.getElementById('btnPrintBW').click(); toggleFabMenu();" class="fab-item">
+        <i data-lucide="printer"></i> Print Sheet
+      </button>
     </div>
   </div>
 

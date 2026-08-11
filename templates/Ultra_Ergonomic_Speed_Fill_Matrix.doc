@@ -1,0 +1,45 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset='utf-8'>
+  <title>Ultra-Ergonomic Speed-Fill CNA Matrix Sheet</title>
+  <style>
+    @page WordSection1 { size: 11in 8.5in; margin: 0.25in; mso-page-orientation: landscape; }
+    div.WordSection1 { page: WordSection1; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #000; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+    td, th { border: 1px solid #000; padding: 5px; text-align: left; vertical-align: top; height: 32px; }
+    th { background: #000; color: #fff; font-weight: bold; text-transform: uppercase; font-size: 7.5pt; }
+    .minimal-header-box { border: 2px solid #000; padding: 6px 12px; margin-bottom: 8px; font-weight: bold; font-size: 8pt; }
+  </style>
+</head>
+<body>
+<div class="WordSection1">
+
+<div class="minimal-header-box">
+  <table style="border:none; width:100%;">
+    <tr style="border:none;">
+      <td style="border:none;"><b>FACILITY:</b> Santé of Mesa</td>
+      <td style="border:none;"><b>DATE:</b> ____________________</td>
+      <td style="border:none;"><b>SHIFT:</b> [ ] DAY [ ] EVE [ ] NOC</td>
+      <td style="border:none;"><b>HALL / ASSIGNMENT:</b> ____________________</td>
+      <td style="border:none;"><b>CNA NAME:</b> ____________________</td>
+      <td style="border:none;"><b>SHIFT NURSE:</b> ____________________</td>
+    </tr>
+  </table>
+</div>
+
+<table>
+  <tr>
+    <th width="5%">RM #</th>
+    <th width="14%">PATIENT NAME</th>
+    <th width="8%">CODE STATUS</th>
+    <th width="14%">FOOD RESTRICTIONS</th>
+    <th width="14%">BEVERAGE RESTRICTIONS</th>
+    <th width="13%">MOBILITY / EQUIP</th>
+    <th width="11%">BRIEF SIZE / TOILET</th>
+    <th width="15%">VITALS & BG (SPACIOUS)</th>
+    <th width="6%">NOTES</th>
+  </tr>
+  <tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr><tr><td>______</td><td>_________________</td><td></td><td>REG / MECH / MINCED / PUREE / NPO</td><td>THIN / NECTAR / HONEY / RESTR</td><td>LIM / EXT / TOT | FWW / HYR / WC</td><td>M / L / XL / 2XL / 3XL | BRIEF</td><td>B/P: ______________<br/>HR: _____ T: _____ O2: ____% BG: _____</td><td></td></tr>
+</table>
+</div></body></html>

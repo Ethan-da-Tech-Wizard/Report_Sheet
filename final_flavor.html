@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PointClickCare (PCC) Universal Master CNA Shift Worksheet</title>
+  <style>
+    /* ============================================================
+       POINTCLICKCARE (PCC) UNIVERSAL SINGLE-SHEET MASTER MATRIX
+       ============================================================ */
+    :root {
+      --font-stack: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: #f1f5f9;
+      color: #000000;
+      line-height: 1.25;
+    }
+
+    /* Top Control Toolbar (Screen Only) */
+    .toolbar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .toolbar-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .action-btn {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .action-btn-green {
+      background: #16a34a;
+    }
+    .action-btn-green:hover {
+      background: #15803d;
+    }
+
+    .action-btn-amber {
+      background: #d97706;
+    }
+    .action-btn-amber:hover {
+      background: #b45309;
+    }
+
+    .action-btn-purple {
+      background: #9333ea;
+    }
+    .action-btn-purple:hover {
+      background: #7e22ce;
+    }
+
+    /* Page Canvas (Screen View) */
+    .sheet-container {
+      max-width: 11in;
+      margin: 15px auto;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 0.2in;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: max-width 0.2s ease;
+    }
+
+    body.is-portrait .sheet-container {
+      max-width: 8.5in;
+    }
+
+    /* Print Setup — Forced Monochrome High-Contrast Landscape */
+    @media print {
+      @page {
+        size: letter landscape;
+        margin: 0.2in;
+      }
+      body.is-portrait @page {
+        size: letter portrait;
+        margin: 0.2in;
+      }
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+      .sheet-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      [contenteditable="true"] {
+        outline: none !important;
+        background: transparent !important;
+      }
+    }
+
+    /* Minimal Single-Line Header Bar */
+    .pcc-header-bar {
+      font-size: 8.5pt;
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      border: 1.5px solid #000000;
+      padding: 4px 8px;
+      background: #ffffff;
+    }
+
+    /* HIGH DENSITY MATRIX TABLE STYLES */
+    .pcc-matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 7.5pt;
+    }
+
+    .pcc-matrix-table th {
+      border: 1.5px solid #000000;
+      background: #e2e8f0;
+      color: #000000;
+      padding: 4px;
+      font-weight: 900;
+      font-size: 7pt;
+      text-transform: uppercase;
+      text-align: center;
+      border-bottom: 2px solid #000000;
+    }
+
+    .pcc-matrix-table td {
+      border: 1px solid #000000;
+      padding: 4px 5px;
+      vertical-align: top;
+      height: 52px;
+      line-height: 1.35;
+    }
+
+    .micro-chk {
+      display: inline-block;
+      width: 8.5px;
+      height: 8.5px;
+      border: 1px solid #000000;
+      margin-right: 1.5px;
+      vertical-align: middle;
+    }
+
+    .line-blank {
+      display: inline-block;
+      border-bottom: 1px solid #000000;
+      min-height: 10px;
+    }
+
+    /* Spacious Vitals Text Formatting */
+    .vitals-spacious-cell {
+      font-size: 7.5pt;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    /* Universal Column Width Allocations */
+    .col-rm { width: 7%; }
+    .col-code { width: 6%; }
+    .col-diet { width: 12%; }
+    .col-adl { width: 12%; }
+    .col-brief { width: 10%; }
+    .col-vitals { width: 18%; }
+    .col-turn { width: 14%; }
+    .col-notes { width: 11%; }
+
+    .editable-mode [contenteditable="true"]:hover {
+      background: #fef08a !important;
+      cursor: text;
+    }
+
+    .editable-mode [contenteditable="true"]:focus {
+      background: #fef08a !important;
+      outline: 2px solid #2563eb !important;
+    }
+  </style>
+</head>
+<body class="editable-mode">
+
+  <!-- Top Controls Bar (Screen Only) -->
+  <div class="toolbar no-print">
+    <div class="toolbar-title">🏥 PointClickCare (PCC) Universal Master CNA Sheet</div>
+    
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <button id="btnOrientationToggle" class="action-btn action-btn-purple" onclick="toggleOrientation()">📐 Switch to Portrait View</button>
+      <button class="action-btn action-btn-amber" onclick="togglePromptText()">🔄 Toggle Prompts / Blank</button>
+      <button class="action-btn" onclick="addTableRow()">+ Add Patient Row</button>
+      <button class="action-btn" onclick="removeTableRow()">- Remove Row</button>
+      <button class="action-btn action-btn-green" onclick="saveCustomLayout()">💾 Save Layout</button>
+      <button class="action-btn" onclick="window.print()">🖨️ Print Sheet (B&W)</button>
+    </div>
+  </div>
+
+  <div class="sheet-container">
+
+    <!-- PCC Header Bar -->
+    <div class="pcc-header-bar">
+      <span contenteditable="true">FACILITY: Santé of Mesa (PCC)</span>
+      <span contenteditable="true">DATE: ____________</span>
+      <span contenteditable="true">SHIFT: [ ] DAY  [ ] EVE  [ ] NOC</span>
+      <span contenteditable="true">HALL / UNIT: ____________</span>
+      <span contenteditable="true">CNA NAME: ________________________</span>
+      <span contenteditable="true">NURSE: ________________</span>
+    </div>
+
+    <!-- POINTCLICKCARE UNIVERSAL MASTER MATRIX EXACTLY MATCHING USER SPEC -->
+    <table class="pcc-matrix-table" id="pccMatrixTable">
+      <thead>
+        <tr>
+          <th class="col-rm" contenteditable="true">Rm & Name</th>
+          <th class="col-code" contenteditable="true">Code</th>
+          <th class="col-diet" contenteditable="true">PCC Diet & Liquids</th>
+          <th class="col-adl" contenteditable="true">PCC ADL & Equip</th>
+          <th class="col-brief" contenteditable="true">Brief & Toilet</th>
+          <th class="col-vitals" contenteditable="true">VITALS (BP / HR / T / O2 / RR)</th>
+          <th class="col-turn" contenteditable="true">Q2H Turn & BM Log</th>
+          <th class="col-notes" contenteditable="true">Safety & Notes</th>
+        </tr>
+      </thead>
+      <tbody id="pccMatrixTbody">
+        <!-- 14 Rows for 1 Landscape Page -->
+        <script>
+          for (let i = 1; i <= 14; i++) {
+            document.write(`
+              <tr>
+                <td contenteditable="true">
+                  <div><b>Rm:</b> <span class="line-blank" style="width:25px;"></span></div>
+                  <div style="margin-top:2px;"><b>Name:</b><br/><span class="line-blank" style="width:100%;"></span></div>
+                </td>
+                <td style="text-align:center; font-size:7pt;" contenteditable="true">
+                  FULL /<br/>
+                  DNR<br/>
+                  DNI /<br/>
+                  POLST
+                </td>
+                <td contenteditable="true">
+                  <b>DIET:</b> REG / MECH /<br/>
+                  MOIST / PUREE / NPO<br/>
+                  <b>LIQ:</b> THIN / NECT /<br/>
+                  HONY / PUDD /<br/>
+                  RESTR
+                </td>
+                <td contenteditable="true">
+                  <b>ADL:</b> IND / SUP / LIM /<br/>
+                  EXT / TOT<br/>
+                  <b>EQUIP:</b> 1PA / 2PA |<br/>
+                  FWW / HYR / SARA /<br/>
+                  WC
+                </td>
+                <td contenteditable="true">
+                  <b>SIZE:</b> M / L / XL /<br/>
+                  2XL / 3XL<br/>
+                  <b>TYPE:</b> BRIEF /<br/>
+                  FOLEY / OSTOMY
+                </td>
+                <td contenteditable="true" class="vitals-spacious-cell">
+                  <b>BP:</b> ________________________<br/>
+                  <b>HR:</b> _________  <b>T:</b> _________<br/>
+                  <b>O2:</b> _______% ( <span class="micro-chk"></span><b>RA</b> <span class="micro-chk"></span><b>NC</b> )<br/>
+                  <b>RR:</b> _________
+                </td>
+                <td contenteditable="true">
+                  <b>TURNS:</b> <span class="micro-chk"></span>8 <span class="micro-chk"></span>10 <span class="micro-chk"></span>12 <span class="micro-chk"></span>2<br/>
+                  <span class="micro-chk"></span>4 <span class="micro-chk"></span>6<br/>
+                  <b>BM:</b> <span class="micro-chk"></span>0 <span class="micro-chk"></span>S <span class="micro-chk"></span>M <span class="micro-chk"></span>L<br/>
+                  <b>ADL:</b> <span class="micro-chk"></span>Shower <span class="micro-chk"></span>Bath <span class="micro-chk"></span>Skin <span class="micro-chk"></span>Oral
+                </td>
+                <td contenteditable="true">
+                  <span class="micro-chk"></span>Fall <span class="micro-chk"></span>LoBd <span class="micro-chk"></span>Iso<br/>
+                  <b>Notes:</b>
+                </td>
+              </tr>
+            `);
+          }
+        </script>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script>
+    let isBlankMode = false;
+    let isPortraitMode = false;
+
+    function toggleOrientation() {
+      isPortraitMode = !isPortraitMode;
+      const body = document.body;
+      const btn = document.getElementById('btnOrientationToggle');
+
+      if (isPortraitMode) {
+        body.classList.add('is-portrait');
+        btn.innerText = '📐 Switch to Landscape View';
+      } else {
+        body.classList.remove('is-portrait');
+        btn.innerText = '📐 Switch to Portrait View';
+      }
+    }
+
+    function togglePromptText() {
+      const rows = document.querySelectorAll('#pccMatrixTbody tr');
+      isBlankMode = !isBlankMode;
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 8) {
+          if (isBlankMode) {
+            cells[1].innerText = '';
+            cells[2].innerText = '';
+            cells[3].innerText = '';
+            cells[4].innerText = '';
+            cells[5].innerText = '';
+            cells[6].innerText = '';
+            cells[7].innerText = '';
+          } else {
+            cells[1].innerHTML = 'FULL /<br/>DNR<br/>DNI /<br/>POLST';
+            cells[2].innerHTML = '<b>DIET:</b> REG / MECH /<br/>MOIST / PUREE / NPO<br/><b>LIQ:</b> THIN / NECT /<br/>HONY / PUDD /<br/>RESTR';
+            cells[3].innerHTML = '<b>ADL:</b> IND / SUP / LIM /<br/>EXT / TOT<br/><b>EQUIP:</b> 1PA / 2PA |<br/>FWW / HYR / SARA /<br/>WC';
+            cells[4].innerHTML = '<b>SIZE:</b> M / L / XL /<br/>2XL / 3XL<br/><b>TYPE:</b> BRIEF /<br/>FOLEY / OSTOMY';
+            cells[5].innerHTML = '<b>BP:</b> ________________________<br/><b>HR:</b> _________  <b>T:</b> _________<br/><b>O2:</b> _______% ( <span class="micro-chk"></span><b>RA</b> <span class="micro-chk"></span><b>NC</b> )<br/><b>RR:</b> _________';
+            cells[6].innerHTML = '<b>TURNS:</b> <span class="micro-chk"></span>8 <span class="micro-chk"></span>10 <span class="micro-chk"></span>12 <span class="micro-chk"></span>2<br/><span class="micro-chk"></span>4 <span class="micro-chk"></span>6<br/><b>BM:</b> <span class="micro-chk"></span>0 <span class="micro-chk"></span>S <span class="micro-chk"></span>M <span class="micro-chk"></span>L<br/><b>ADL:</b> <span class="micro-chk"></span>Shower <span class="micro-chk"></span>Bath <span class="micro-chk"></span>Skin <span class="micro-chk"></span>Oral';
+            cells[7].innerHTML = '<span class="micro-chk"></span>Fall <span class="micro-chk"></span>LoBd <span class="micro-chk"></span>Iso<br/><b>Notes:</b>';
+          }
+        }
+      });
+    }
+
+    function addTableRow() {
+      const tbody = document.getElementById('pccMatrixTbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td contenteditable="true">
+          <div><b>Rm:</b> <span class="line-blank" style="width:25px;"></span></div>
+          <div style="margin-top:2px;"><b>Name:</b><br/><span class="line-blank" style="width:100%;"></span></div>
+        </td>
+        <td style="text-align:center; font-size:7pt;" contenteditable="true">
+          FULL /<br/>
+          DNR<br/>
+          DNI /<br/>
+          POLST
+        </td>
+        <td contenteditable="true">
+          <b>DIET:</b> REG / MECH /<br/>
+          MOIST / PUREE / NPO<br/>
+          <b>LIQ:</b> THIN / NECT /<br/>
+          HONY / PUDD /<br/>
+          RESTR
+        </td>
+        <td contenteditable="true">
+          <b>ADL:</b> IND / SUP / LIM /<br/>
+          EXT / TOT<br/>
+          <b>EQUIP:</b> 1PA / 2PA |<br/>
+          FWW / HYR / SARA /<br/>
+          WC
+        </td>
+        <td contenteditable="true">
+          <b>SIZE:</b> M / L / XL /<br/>
+          2XL / 3XL<br/>
+          <b>TYPE:</b> BRIEF /<br/>
+          FOLEY / OSTOMY
+        </td>
+        <td contenteditable="true" class="vitals-spacious-cell">
+          <b>BP:</b> ________________________<br/>
+          <b>HR:</b> _________  <b>T:</b> _________<br/>
+          <b>O2:</b> _______% ( <span class="micro-chk"></span><b>RA</b> <span class="micro-chk"></span><b>NC</b> )<br/>
+          <b>RR:</b> _________
+        </td>
+        <td contenteditable="true">
+          <b>TURNS:</b> <span class="micro-chk"></span>8 <span class="micro-chk"></span>10 <span class="micro-chk"></span>12 <span class="micro-chk"></span>2<br/>
+          <span class="micro-chk"></span>4 <span class="micro-chk"></span>6<br/>
+          <b>BM:</b> <span class="micro-chk"></span>0 <span class="micro-chk"></span>S <span class="micro-chk"></span>M <span class="micro-chk"></span>L<br/>
+          <b>ADL:</b> <span class="micro-chk"></span>Shower <span class="micro-chk"></span>Bath <span class="micro-chk"></span>Skin <span class="micro-chk"></span>Oral
+        </td>
+        <td contenteditable="true">
+          <span class="micro-chk"></span>Fall <span class="micro-chk"></span>LoBd <span class="micro-chk"></span>Iso<br/>
+          <b>Notes:</b>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function removeTableRow() {
+      const tbody = document.getElementById('pccMatrixTbody');
+      if (tbody.children.length > 1) {
+        tbody.removeChild(tbody.lastElementChild);
+      }
+    }
+
+    function saveCustomLayout() {
+      const container = document.querySelector('.sheet-container');
+      localStorage.setItem('sante_custom_pcc_shower_exact', container.innerHTML);
+      alert('✅ PointClickCare (PCC) Master Sheet saved!');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedHTML = localStorage.getItem('sante_custom_pcc_shower_exact');
+      if (savedHTML) {
+        document.querySelector('.sheet-container').innerHTML = savedHTML;
+      }
+    });
+  </script>
+</body>
+</html>

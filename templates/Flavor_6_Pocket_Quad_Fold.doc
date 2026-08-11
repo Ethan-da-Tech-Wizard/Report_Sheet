@@ -1,0 +1,70 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset='utf-8'>
+  <title>CNA Shift Report Sheet Template</title>
+  <style>
+    @page WordSection1 { size: 11in 8.5in; margin: 0.25in; mso-page-orientation: landscape; }
+    div.WordSection1 { page: WordSection1; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #000; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+    td, th { border: 1px solid #000; padding: 4px; text-align: left; }
+    th { background: #000; color: #fff; font-weight: bold; text-transform: uppercase; font-size: 8pt; }
+    .header-box { border: 2px solid #000; padding: 6px; margin-bottom: 8px; }
+    .key-box { border: 1.5px solid #000; padding: 4px; margin-bottom: 8px; font-size: 7.5pt; }
+    .badge { background: #000; color: #fff; padding: 1px 4px; font-weight: bold; }
+    .card-table { width: 100%; border: 1.5px solid #000; margin-bottom: 6px; }
+    .rm-badge { background: #000; color: #fff; font-weight: bold; font-size: 10pt; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+<div class="WordSection1">
+
+    <div class="header-box">
+      <strong>FACILITY:</strong> Santé of Mesa | <strong>FORMAT:</strong> QUAD-FOLD SCRUB POCKET (4 RESIDENTS / SIDE)
+    </div>
+    <table>
+      
+      <tr>
+        <td width="50%" valign="top">
+          <b>RM ______ — RESIDENT: ___________________</b> [FULL CODE / DNR]<br/>
+          <b>DIET/LIQ:</b> REG / MECH / MOIST / PUREE | THIN / HONEY<br/>
+          <b>MOBILITY:</b> LIM / EXT / TOT | FWW / HYR / SARA / WC<br/>
+          <b>BRIEF SIZE:</b> M / L / XL / XXL / 3XL | <b>SHOWER:</b> ________<br/>
+          <b>MEAL CONSUMPTION:</b> [ ] 25%   [ ] 50%   [ ] 75%   [ ] 100%<br/>
+          <b>VITALS:</b> BP ___/___ HR ___ T ___ O2 ___% | <b>BG:</b> ____<br/>
+          <b>NOTES:</b> __________________________________________
+        </td>
+        <td width="50%" valign="top">
+          <b>RM ______ — RESIDENT: ___________________</b> [FULL CODE / DNR]<br/>
+          <b>DIET/LIQ:</b> REG / MECH / MOIST / PUREE | THIN / HONEY<br/>
+          <b>MOBILITY:</b> LIM / EXT / TOT | FWW / HYR / SARA / WC<br/>
+          <b>BRIEF SIZE:</b> M / L / XL / XXL / 3XL | <b>SHOWER:</b> ________<br/>
+          <b>MEAL CONSUMPTION:</b> [ ] 25%   [ ] 50%   [ ] 75%   [ ] 100%<br/>
+          <b>VITALS:</b> BP ___/___ HR ___ T ___ O2 ___% | <b>BG:</b> ____<br/>
+          <b>NOTES:</b> __________________________________________
+        </td>
+      </tr>
+      
+      <tr>
+        <td width="50%" valign="top">
+          <b>RM ______ — RESIDENT: ___________________</b> [FULL CODE / DNR]<br/>
+          <b>DIET/LIQ:</b> REG / MECH / MOIST / PUREE | THIN / HONEY<br/>
+          <b>MOBILITY:</b> LIM / EXT / TOT | FWW / HYR / SARA / WC<br/>
+          <b>BRIEF SIZE:</b> M / L / XL / XXL / 3XL | <b>SHOWER:</b> ________<br/>
+          <b>MEAL CONSUMPTION:</b> [ ] 25%   [ ] 50%   [ ] 75%   [ ] 100%<br/>
+          <b>VITALS:</b> BP ___/___ HR ___ T ___ O2 ___% | <b>BG:</b> ____<br/>
+          <b>NOTES:</b> __________________________________________
+        </td>
+        <td width="50%" valign="top">
+          <b>RM ______ — RESIDENT: ___________________</b> [FULL CODE / DNR]<br/>
+          <b>DIET/LIQ:</b> REG / MECH / MOIST / PUREE | THIN / HONEY<br/>
+          <b>MOBILITY:</b> LIM / EXT / TOT | FWW / HYR / SARA / WC<br/>
+          <b>BRIEF SIZE:</b> M / L / XL / XXL / 3XL | <b>SHOWER:</b> ________<br/>
+          <b>MEAL CONSUMPTION:</b> [ ] 25%   [ ] 50%   [ ] 75%   [ ] 100%<br/>
+          <b>VITALS:</b> BP ___/___ HR ___ T ___ O2 ___% | <b>BG:</b> ____<br/>
+          <b>NOTES:</b> __________________________________________
+        </td>
+      </tr>
+      
+    </table>
+    </div></body></html>

@@ -1,0 +1,44 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset='utf-8'>
+  <title>CNA Shift Report Matrix Sheet Template</title>
+  <style>
+    @page WordSection1 { size: 11in 8.5in; margin: 0.25in; mso-page-orientation: landscape; }
+    div.WordSection1 { page: WordSection1; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; color: #000; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+    td, th { border: 1px solid #000; padding: 3px; text-align: left; vertical-align: top; }
+    th { background: #000; color: #fff; font-weight: bold; text-transform: uppercase; font-size: 7.5pt; }
+    .header-box { border: 2px solid #000; padding: 4px 8px; margin-bottom: 6px; font-size: 8pt; }
+    .key-box { border: 1.5px solid #000; padding: 3px 6px; margin-bottom: 6px; font-size: 7pt; }
+    .badge { background: #000; color: #fff; padding: 1px 3px; font-weight: bold; }
+    .rm-num { font-weight: bold; font-size: 8.5pt; }
+  </style>
+</head>
+<body>
+<div class="WordSection1">
+
+    <div class="header-box">
+      <strong>FACILITY:</strong> Santé of Mesa | <strong>DATE:</strong> ____________ | <strong>SHIFT:</strong> [ ] DAY  [ ] EVE  [ ] NOC | <strong>CNA:</strong> ____________
+    </div>
+    <div class="key-box">
+      <strong>DIETS:</strong> REG | MECH SOFT | MINCED & MOIST | PUREE | NPO &nbsp;|&nbsp; 
+      <strong>LIQUIDS:</strong> THIN | NECTAR | HONEY | PUDDING &nbsp;|&nbsp; 
+      <strong>BRIEFS:</strong> M | L | XL | XXL | 3XL &nbsp;|&nbsp; 
+      <strong>MEALS:</strong> 25% | 50% | 75% | 100%
+    </div>
+    <table>
+      <tr>
+        <th width="5%">RM #</th>
+        <th width="15%">RESIDENT NAME</th>
+        <th width="8%">CODE</th>
+        <th width="16%">DIET & LIQUID CONSISTENCY</th>
+        <th width="14%">MOBILITY / EQUIP</th>
+        <th width="11%">BRIEF SIZE / TOILET</th>
+        <th width="13%">VITALS (BP / HR / T / O2)</th>
+        <th width="8%">MEAL %</th>
+        <th width="10%">NOTES</th>
+      </tr>
+      <tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr><tr><td class='rm-num'>____</td><td>__________________</td><td>FULL / DNR</td><td>REG / MOIST / THIN / HONEY</td><td>LIM / EXT / TOT | FWW / HYR</td><td>M / L / XL / 2XL / 3XL</td><td>BP___/___ HR___ O2___%</td><td>[ ]25 [ ]50 [ ]75 [ ]100</td><td></td></tr>
+    </table>
+    </div></body></html>

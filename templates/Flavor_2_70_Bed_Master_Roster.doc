@@ -1,0 +1,43 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset='utf-8'>
+  <title>CNA Shift Report Sheet Template</title>
+  <style>
+    @page WordSection1 { size: 11in 8.5in; margin: 0.25in; mso-page-orientation: landscape; }
+    div.WordSection1 { page: WordSection1; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #000; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+    td, th { border: 1px solid #000; padding: 4px; text-align: left; }
+    th { background: #000; color: #fff; font-weight: bold; text-transform: uppercase; font-size: 8pt; }
+    .header-box { border: 2px solid #000; padding: 6px; margin-bottom: 8px; }
+    .key-box { border: 1.5px solid #000; padding: 4px; margin-bottom: 8px; font-size: 7.5pt; }
+    .badge { background: #000; color: #fff; padding: 1px 4px; font-weight: bold; }
+    .card-table { width: 100%; border: 1.5px solid #000; margin-bottom: 6px; }
+    .rm-badge { background: #000; color: #fff; font-weight: bold; font-size: 10pt; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+<div class="WordSection1">
+
+    <div class="header-box">
+      <strong>FACILITY:</strong> Santé of Mesa (70-Bed Master Roster) | <strong>DATE:</strong> ____________ | <strong>CENSUS:</strong> ___/70
+    </div>
+    <table>
+      <tr>
+        <th width="8%">ROOM</th>
+        <th width="22%">RESIDENT NAME</th>
+        <th width="10%">CODE</th>
+        <th width="18%">DIET & LIQUIDS</th>
+        <th width="14%">MOBILITY</th>
+        <th width="14%">BRIEF SIZE</th>
+        <th width="14%">MEAL % / NOTES</th>
+      </tr>
+      <tr style="background:#000; color:#fff;"><td colspan="7"><b>HALL 1 (ROOMS 101 – 115)</b></td></tr>
+      <tr><td>101</td><td></td><td>FULL/DNR</td><td>REG / MECH / MOIST / THIN / HONEY</td><td>LIM/EXT/TOT</td><td>M / L / XL / XXL / 3XL</td><td>[ ]25% [ ]50% [ ]75% [ ]100%</td></tr>
+      <tr><td>102</td><td></td><td>FULL/DNR</td><td>REG / MECH / MOIST / THIN / HONEY</td><td>LIM/EXT/TOT</td><td>M / L / XL / XXL / 3XL</td><td>[ ]25% [ ]50% [ ]75% [ ]100%</td></tr>
+      <tr><td>107-A</td><td></td><td>FULL/DNR</td><td>SEMI-PRIVATE BED A</td><td>LIM/EXT/TOT</td><td>M / L / XL / XXL / 3XL</td><td>[ ]25% [ ]50% [ ]75% [ ]100%</td></tr>
+      <tr><td>107-B</td><td></td><td>FULL/DNR</td><td>SEMI-PRIVATE BED B</td><td>LIM/EXT/TOT</td><td>M / L / XL / XXL / 3XL</td><td>[ ]25% [ ]50% [ ]75% [ ]100%</td></tr>
+      <tr><td>109-A</td><td></td><td>FULL/DNR</td><td>SEMI-PRIVATE BED A</td><td>LIM/EXT/TOT</td><td>M / L / XL / XXL / 3XL</td><td>[ ]25% [ ]50% [ ]75% [ ]100%</td></tr>
+      <tr><td>109-B</td><td></td><td>FULL/DNR</td><td>SEMI-PRIVATE BED B</td><td>LIM/EXT/TOT</td><td>M / L / XL / XXL / 3XL</td><td>[ ]25% [ ]50% [ ]75% [ ]100%</td></tr>
+    </table>
+    </div></body></html>
