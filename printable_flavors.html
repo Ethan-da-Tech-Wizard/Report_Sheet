@@ -247,7 +247,7 @@
       <span contenteditable="true">NURSE: ________________</span>
     </div>
 
-    <!-- POINTCLICKCARE UNIVERSAL MASTER MATRIX EXACTLY MATCHING USER SPEC -->
+    <!-- POINTCLICKCARE UNIVERSAL MASTER MATRIX -->
     <table class="pcc-matrix-table" id="pccMatrixTable">
       <thead>
         <tr>
@@ -255,7 +255,7 @@
           <th class="col-code" contenteditable="true">Code</th>
           <th class="col-diet" contenteditable="true">PCC Diet & Liquids</th>
           <th class="col-adl" contenteditable="true">PCC ADL & Equip</th>
-          <th class="col-brief" contenteditable="true">Brief & Toilet</th>
+          <th class="col-brief" contenteditable="true">Bowel & Bladder</th>
           <th class="col-vitals" contenteditable="true">VITALS (BP / HR / T / O2 / RR)</th>
           <th class="col-turn" contenteditable="true">Q2H Turn & BM Log</th>
           <th class="col-notes" contenteditable="true">Safety & Notes</th>
@@ -292,9 +292,8 @@
                   WC
                 </td>
                 <td contenteditable="true">
-                  <b>SIZE:</b> M / L / XL /<br/>
-                  2XL / 3XL<br/>
-                  <b>TYPE:</b> BRIEF /<br/>
+                  <b>BOWEL:</b> CONT / INC<br/>
+                  <b>BLADD:</b> CONT / INC<br/>
                   FOLEY / OSTOMY
                 </td>
                 <td contenteditable="true" class="vitals-spacious-cell">
@@ -390,7 +389,7 @@
             cells[1].innerHTML = 'FULL /<br/>DNR<br/>DNI /<br/>POLST';
             cells[2].innerHTML = '<b>DIET:</b> REG / MECH /<br/>MOIST / PUREE / NPO<br/><b>LIQ:</b> THIN / NECT /<br/>HONY / PUDD /<br/>RESTR';
             cells[3].innerHTML = '<b>ADL:</b> IND / SUP / LIM /<br/>EXT / TOT<br/><b>EQUIP:</b> 1PA / 2PA |<br/>FWW / HYR / SARA /<br/>WC';
-            cells[4].innerHTML = '<b>SIZE:</b> M / L / XL /<br/>2XL / 3XL<br/><b>TYPE:</b> BRIEF /<br/>FOLEY / OSTOMY';
+            cells[4].innerHTML = '<b>BOWEL:</b> CONT / INC<br/><b>BLADD:</b> CONT / INC<br/>FOLEY / OSTOMY';
             cells[5].innerHTML = '<b>BP:</b> ________________________<br/><b>HR:</b> _________  <b>T:</b> _________<br/><b>O2:</b> _______% ( <span class="micro-chk"></span><b>RA</b> <span class="micro-chk"></span><b>NC</b> )<br/><b>RR:</b> _________';
             cells[6].innerHTML = '<b>TURNS:</b> <span class="micro-chk"></span>8 <span class="micro-chk"></span>10 <span class="micro-chk"></span>12 <span class="micro-chk"></span>2<br/><span class="micro-chk"></span>4 <span class="micro-chk"></span>6<br/><b>BM:</b> <span class="micro-chk"></span>0 <span class="micro-chk"></span>S <span class="micro-chk"></span>M <span class="micro-chk"></span>L<br/><b>ADL:</b> <span class="micro-chk"></span>Shower <span class="micro-chk"></span>Bath <span class="micro-chk"></span>Skin <span class="micro-chk"></span>Oral';
             cells[7].innerHTML = '<span class="micro-chk"></span>Fall <span class="micro-chk"></span>LoBd <span class="micro-chk"></span>Iso<br/><b>Notes:</b>';
@@ -428,9 +427,8 @@
           WC
         </td>
         <td contenteditable="true">
-          <b>SIZE:</b> M / L / XL /<br/>
-          2XL / 3XL<br/>
-          <b>TYPE:</b> BRIEF /<br/>
+          <b>BOWEL:</b> CONT / INC<br/>
+          <b>BLADD:</b> CONT / INC<br/>
           FOLEY / OSTOMY
         </td>
         <td contenteditable="true" class="vitals-spacious-cell">
@@ -469,7 +467,8 @@
     window.addEventListener('DOMContentLoaded', () => {
       const savedHTML = localStorage.getItem('sante_custom_pcc_shower_exact');
       if (savedHTML) {
-        document.querySelector('.sheet-container').innerHTML = savedHTML;
+        // Clear cached storage to ensure updated Bowel/Bladder format loads cleanly
+        localStorage.removeItem('sante_custom_pcc_shower_exact');
       }
     });
   </script>
